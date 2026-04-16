@@ -40,4 +40,24 @@ class Flota {
         }
         return $vehiculos;
     }
+
+    public static function getVehiculoById($id) {
+    $conexion = DrivoDB::connectDB();
+    $consulta = $conexion->query("SELECT * FROM flota WHERE id=$id");
+    if ($reg = $consulta->fetchObject()) {
+        return new Flota($reg->id, $reg->marca, $reg->modelo, $reg->traccion, $reg->ruedas, $reg->motor, $reg->cambios, $reg->anio, $reg->precio_dia);
+    }
+    return false;
+}
+
+public static function getDestacados($limite = 3) {
+    $conexion = DrivoDB::connectDB();
+    // Trae los coches más nuevos para la portada
+    $consulta = $conexion->query("SELECT * FROM flota ORDER BY anio DESC LIMIT $limite");
+    $resultado = [];
+    while ($reg = $consulta->fetchObject()) {
+        $resultado[] = new Flota($reg->id, $reg->marca, $reg->modelo, $reg->traccion, $reg->ruedas, $reg->motor, $reg->cambios, $reg->anio, $reg->precio_dia);
+    }
+    return $resultado;
+}
 }

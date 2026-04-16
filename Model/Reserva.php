@@ -42,4 +42,17 @@ class Reserva {
         }
         return $reservas;
     }
+
+    public function calcularDias() {
+    $inicio = new DateTime($this->fecha_inicio);
+    $fin = new DateTime($this->fecha_fin);
+    $diferencia = $inicio->diff($fin);
+    return $diferencia->days;
+}
+
+public function getCosteTotal() {
+    // Necesitamos el precio del coche asociado
+    $coche = Flota::getVehiculoById($this->id_vehiculo);
+    return $this->calcularDias() * $coche->getPrecioDia();
+}
 }

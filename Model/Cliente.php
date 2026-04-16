@@ -24,4 +24,14 @@ class Cliente {
         }
         return false;
     }
+
+    public static function login($usuario, $password) {
+    $conexion = DrivoDB::connectDB();
+    // En producción usa password_verify, aquí lo hacemos simple por el esquema
+    $consulta = $conexion->query("SELECT * FROM clientes WHERE user='$usuario' AND passw='$password'");
+    if ($reg = $consulta->fetchObject()) {
+        return new Cliente($reg->id, $reg->user, $reg->passw, $reg->reservas_actuales, $reg->reservas_totales);
+    }
+    return false;
+}
 }
