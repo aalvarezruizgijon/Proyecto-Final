@@ -24,7 +24,7 @@ class Flota {
         $this->precio_dia = $precio_dia;
     }
 
-    // Getters para acceder a los datos
+    // Getters
     public function getId() { return $this->id; }
     public function getMarca() { return $this->marca; }
     public function getModelo() { return $this->modelo; }
