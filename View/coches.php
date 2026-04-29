@@ -1,29 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drivo | Inicio</title>
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <!-- Iconos Bootstrap -->
+    <title>Drivo | Nuestros Coches</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!-- CSS normal -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="shortcut icon" href="./img/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="shortcut icon" href="../img/logo.png" type="image/x-icon">
+    
+    <style>
+        /* Ajuste para que las tarjetas no toquen el footer */
+        .main__container {
+            padding-bottom: 100px;
+        }
+
+        .ofertas__flex {
+            margin-bottom: 40px;
+        }
+
+        /* Asegurar que las fotos mantengan un tamaño uniforme */
+        .photo {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+    </style>
 </head>
 <body>
-    <!-- HEADER -->
     <header class="header__container">
         <div class="logo__container">
-            <img class="logo" src="./img/logo.png" alt="">
+            <img class="logo" src="../img/logo.png" alt="Drivo Logo">
         </div>
 
         <div class="links__container">
             <nav class="nav">
-                <a class="link" href="./View/coches.php">Ver coches</a>
-                <a class="link" href="./View/reservas.php">Mis reservas</a>
-                <a class="link" href="./View/contacto.php">Contactanos</a>
+                <a class="link" href="../View/coches.php" style="color:#7BD5AB;">Ver coches</a>
+                <a class="link" href="../View/reservas.php">Mis reservas</a>
+                <a class="link" href="../View/contacto.php">Contactanos</a>
             </nav>
             <div class="icon--user">
                 <i class="bi bi-person-fill icon"></i>
@@ -31,33 +46,22 @@
         </div>
     </header>
 
-    <!-- HERO -->
-    <section class="hero__container">
-        <img class="hero" src="./img/hero.png" alt="Hero">
-    </section>
-
-    <!-- MAIN -->
     <main class="main__container">
-        <h1 class="title">NUESTRAS OFERTAS</h1>
+        <h1 class="title">NUESTROS COCHES</h1>
         
-        <!-- Flex -->
         <div class="ofertas__flex">
-            <!-- Card -->
             <div class="oferta">
                 <h3 class="modelo">AUDI A4</h3>
-                
                 <div class="photo__container">
-                    <img class="photo" src="./img/coches/audi_a4.avif" alt="Audi A4">
+                    <img class="photo" src="../img/coches/audi_a4.avif" alt="Audi A4">
                 </div>
-
                 <div class="info__container">
                     <p><i class="bi bi-gear"></i> Tracción a las 4 ruedas</p>
-                    <p><i class="bi bi-life-preserver"></i> Monta llantas de 19"</p>
+                    <p><i class="bi bi-life-preserver"></i> Monta llantas de 19'</p>
                     <p><i class="bi bi-engine-fill"></i> Motor de gasolina 2.0 TFSI 197cv</p>
-                    <p><i class="bi bi-command"></i> Caja de cambios automática</p>
+                    <p><i class="bi bi-command"></i> Caja de cambios automatica</p>
                     <p><i class="bi bi-calendar-event"></i> Año 2019</p>
                 </div>
-
                 <div class="reservar__container">
                     <div class="price__section">
                         <span class="price-label">PRECIO:</span>
@@ -70,13 +74,13 @@
             <div class="oferta">
                 <h3 class="modelo">PORSCHE CAYENNE</h3>
                 <div class="photo__container">
-                    <img class="photo" src="./img/coches/porsche_cayenne.jpg" alt="Porsche Cayenne">
+                    <img class="photo" src="../img/coches/porsche_cayenne.jpg" alt="Porsche Cayenne">
                 </div>
                 <div class="info__container">
                     <p><i class="bi bi-gear"></i> Tracción a las 4 ruedas</p>
-                    <p><i class="bi bi-life-preserver"></i> Monta llantas de 21"</p>
+                    <p><i class="bi bi-life-preserver"></i> Monta llantas de 21'</p>
                     <p><i class="bi bi-engine-fill"></i> Motor de gasolina V8 Biturbo 500cv</p>
-                    <p><i class="bi bi-command"></i> Caja de cambios automática</p>
+                    <p><i class="bi bi-command"></i> Caja de cambios automatica</p>
                     <p><i class="bi bi-calendar-event"></i> Año 2023</p>
                 </div>
                 <div class="reservar__container">
@@ -91,13 +95,13 @@
             <div class="oferta">
                 <h3 class="modelo">VOLKSWAGEN TIGUAN</h3>
                 <div class="photo__container">
-                    <img class="photo" src="./img/coches/volkswagen_tiguan.webp" alt="Volkswagen Tiguan">
+                    <img class="photo" src="../img/coches/volkswagen_tiguan.webp" alt="Volkswagen Tiguan">
                 </div>
                 <div class="info__container">
                     <p><i class="bi bi-gear"></i> Tracción a las 4 ruedas</p>
-                    <p><i class="bi bi-life-preserver"></i> Monta llantas de 19"</p>
+                    <p><i class="bi bi-life-preserver"></i> Monta llantas de 19'</p>
                     <p><i class="bi bi-engine-fill"></i> Motor diesel 2.0 TDI 150cv</p>
-                    <p><i class="bi bi-command"></i> Caja de cambios automática</p>
+                    <p><i class="bi bi-command"></i> Caja de cambios automatica</p>
                     <p><i class="bi bi-calendar-event"></i> Año 2018</p>
                 </div>
                 <div class="reservar__container">
@@ -112,13 +116,13 @@
             <div class="oferta">
                 <h3 class="modelo">VOLKSWAGEN GOLF</h3>
                 <div class="photo__container">
-                    <img class="photo" src="./img/coches/volkswagen_golf_gti.avif" alt="Volkswagen Golf">
+                    <img class="photo" src="../img/coches/volkswagen_golf_gti.avif" alt="Volkswagen Golf">
                 </div>
                 <div class="info__container">
                     <p><i class="bi bi-gear"></i> Tracción a las 4 ruedas</p>
-                    <p><i class="bi bi-life-preserver"></i> Monta llantas de 19"</p>
+                    <p><i class="bi bi-life-preserver"></i> Monta llantas de 19'</p>
                     <p><i class="bi bi-engine-fill"></i> Motor de gasolina 2.0 TFSI 241cv</p>
-                    <p><i class="bi bi-command"></i> Caja de cambios automática</p>
+                    <p><i class="bi bi-command"></i> Caja de cambios automatica</p>
                     <p><i class="bi bi-calendar-event"></i> Año 2025</p>
                 </div>
                 <div class="reservar__container">
@@ -133,13 +137,13 @@
             <div class="oferta">
                 <h3 class="modelo">FORD EXPLORER</h3>
                 <div class="photo__container">
-                    <img class="photo" src="./img/coches/ford_explorer.webp" alt="Ford Explorer">
+                    <img class="photo" src="../img/coches/ford_explorer.webp" alt="Ford Explorer">
                 </div>
                 <div class="info__container">
                     <p><i class="bi bi-gear"></i> Tracción a las 4 ruedas</p>
-                    <p><i class="bi bi-life-preserver"></i> Monta llantas de 19"</p>
+                    <p><i class="bi bi-life-preserver"></i> Monta llantas de 19'</p>
                     <p><i class="bi bi-engine-fill"></i> Motor gasolina 2.3 EcoBoost 300cv</p>
-                    <p><i class="bi bi-command"></i> Caja de cambios automática</p>
+                    <p><i class="bi bi-command"></i> Caja de cambios automatica</p>
                     <p><i class="bi bi-calendar-event"></i> Año 2025</p>
                 </div>
                 <div class="reservar__container">
@@ -154,11 +158,11 @@
             <div class="oferta">
                 <h3 class="modelo">MAZDA CX-5</h3>
                 <div class="photo__container">
-                    <img class="photo" src="./img/coches/mazda_cx-5.webp" alt="Mazda CX-5">
+                    <img class="photo" src="../img/coches/mazda_cx-5.webp" alt="Mazda CX-5">
                 </div>
                 <div class="info__container">
                     <p><i class="bi bi-gear"></i> Tracción delantera</p>
-                    <p><i class="bi bi-life-preserver"></i> Monta llantas de 19"</p>
+                    <p><i class="bi bi-life-preserver"></i> Monta llantas de 19'</p>
                     <p><i class="bi bi-engine-fill"></i> Motor de gasolina 2.0 165cv</p>
                     <p><i class="bi bi-command"></i> Caja de cambios manual 6v</p>
                     <p><i class="bi bi-calendar-event"></i> Año 2021</p>
@@ -171,35 +175,72 @@
                     <a href="#" class="btn__reservar">RESERVAR AHORA</a>
                 </div>
             </div>
+
+            <div class="oferta">
+                <h3 class="modelo">RENAULT ARKANA</h3>
+                <div class="photo__container">
+                    <img class="photo" src="../img/coches/renault_arkana.jpg" alt="Renault Arkana">
+                </div>
+                <div class="info__container">
+                    <p><i class="bi bi-gear"></i> Tracción delantera</p>
+                    <p><i class="bi bi-life-preserver"></i> Monta llantas de 18'</p>
+                    <p><i class="bi bi-engine-fill"></i> Motor E-TECH Híbrido 140 CV</p>
+                    <p><i class="bi bi-command"></i> Caja de cambios automatica</p>
+                    <p><i class="bi bi-calendar-event"></i> Año 2021</p>
+                </div>
+                <div class="reservar__container">
+                    <div class="price__section">
+                        <span class="price-label">PRECIO:</span>
+                        <span class="price-value">65€/día</span>
+                    </div>
+                    <a href="#" class="btn__reservar">RESERVAR AHORA</a>
+                </div>
+            </div>
+
+            <div class="oferta">
+                <h3 class="modelo">PEUGEOT 3008</h3>
+                <div class="photo__container">
+                    <img class="photo" src="../img/coches/peugeot_3008.jpg" alt="Peugeot 3008">
+                </div>
+                <div class="info__container">
+                    <p><i class="bi bi-gear"></i> Tracción delantera</p>
+                    <p><i class="bi bi-life-preserver"></i> Monta llantas de 18'</p>
+                    <p><i class="bi bi-engine-fill"></i> Motor diésel 1.5 BlueHDI 130cv</p>
+                    <p><i class="bi bi-command"></i> Caja de cambios automatica</p>
+                    <p><i class="bi bi-calendar-event"></i> Año 2022</p>
+                </div>
+                <div class="reservar__container">
+                    <div class="price__section">
+                        <span class="price-label">PRECIO:</span>
+                        <span class="price-value">35€/día</span>
+                    </div>
+                    <a href="#" class="btn__reservar">RESERVAR AHORA</a>
+                </div>
+            </div>
+
+            <div class="oferta">
+                <h3 class="modelo">CITRÖEN C3</h3>
+                <div class="photo__container">
+                    <img class="photo" src="../img/coches/citroen_c3.jpg" alt="Citröen C3">
+                </div>
+                <div class="info__container">
+                    <p><i class="bi bi-gear"></i> Tracción delantera</p>
+                    <p><i class="bi bi-life-preserver"></i> Monta llantas de 17'</p>
+                    <p><i class="bi bi-engine-fill"></i> Motor de gasolina 1.2 PureTech 82cv</p>
+                    <p><i class="bi bi-command"></i> Caja de cambios manual 6v</p>
+                    <p><i class="bi bi-calendar-event"></i> Año 2020</p>
+                </div>
+                <div class="reservar__container">
+                    <div class="price__section">
+                        <span class="price-label">PRECIO:</span>
+                        <span class="price-value">29€/día</span>
+                    </div>
+                    <a href="#" class="btn__reservar">RESERVAR AHORA</a>
+                </div>
+            </div>
         </div>
     </main>
 
-    <!-- NOSOTROS -->
-    <section class="nosotros__container">
-        <h2>SOBRE NOSOTROS</h2>
-        
-        <div class="nosotros__container--cont">
-            <div class="texto">
-                <p>Nacimos con una misión clara: transformar la experiencia de alquilar un coche.</p>
-                <p>En Drivo, creemos que el proceso debe ser tan emocionante como el destino. Por eso, unimos la tecnología para una reserva ágil con un trato humano excepcional. Olvídate de la burocracia y la letra pequeña.</p>
-                
-                <strong>¿Por qué elegirnos?</strong>
-                <ul>
-                    <li><strong>Calidad asegurada:</strong> Una flota moderna y premium, revisada al milímetro.</li>
-                    <li><strong>Transparencia total:</strong> El precio que ves es el que pagas. Sin sorpresas en el mostrador.</li>
-                    <li><strong>Nuestro Equipo, Tu Viaje:</strong> Detrás de nuestra plataforma hay un equipo apasionado, dedicado a que tú solo te preocupes de disfrutar de la carretera.</li>
-                </ul>
-                
-                <p>Gracias por confiar en Drivo para tu próxima aventura.</p>
-            </div>
-
-            <div class="image">
-                <img class="image__img" src="./img/sobre nosotros.png" alt="Nosotros">
-            </div>
-        </div>
-    </section>
-
-    <!-- FOOTER -->
     <footer class="footer__container">
         <div class="footer__content">
             <div class="footer__column">
@@ -212,7 +253,7 @@
             <div class="footer__column">
                 <h3>ENLACES</h3>
                 <ul class="footer__links">
-                    <li><a href="#">· Pagina Principal</a></li>
+                    <li><a href="../index.html">· Pagina Principal</a></li>
                     <li><a href="#">· Ver ofertas</a></li>
                     <li><a href="#">· Ver coches</a></li>
                     <li><a href="#">· Mis reservas</a></li>
@@ -223,7 +264,7 @@
             <div class="footer__column">
                 <h3>DONDE ENCONTRARNOS</h3>
                 <div class="map__container">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3175.7607730925!2d-5.7833!3d37.1833!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDExJzAwLjAiTiA1wrA0NycwMC4wIlc!5e0!3m2!1ses!2ses!4v1700000000000" width="100%" height="150" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d194347.38000055272!2d-3.8196195240356515!3d40.41436284698379!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd422997800a3c81%3A0xc436dec1618c2269!2sMadrid!5e0!3m2!1ses!2ses!4v1714560000000!5m2!1ses!2ses" width="100%" height="150" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
         </div>
@@ -233,7 +274,6 @@
         </div>
     </footer>
 
-    <!-- Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
