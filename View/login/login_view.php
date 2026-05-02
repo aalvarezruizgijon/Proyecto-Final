@@ -45,7 +45,7 @@
                 LOGIN
             </h2>
             
-            <form action="../Controller/LoginController.php" method="POST" class="mt-4 pt-3 needs-validation" novalidate>
+            <form action="../Controller/login.php" method="POST" class="mt-4 pt-3 needs-validation" novalidate>
                 
                 <div class="mb-3">
                     <label for="email" class="form-label fw-bold">Email</label>
