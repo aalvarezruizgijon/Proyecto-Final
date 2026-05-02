@@ -1,4 +1,5 @@
 <?php
+require_once 'auth.php';
 require_once '../Model/Vehiculo.php';
 
 // Obtenemos TODO el catálogo de coches para la página "Nuestros Coches"
