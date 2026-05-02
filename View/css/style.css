@@ -349,9 +349,13 @@ body {
     background-color: #f2f2f2;
     color: #152D51;
     text-align: center;
-    padding: 1rem 0;
-    font-size: 0.9rem;
+    padding: 0.3rem 0;
+    font-size: 0.75rem;
     border-top: 1px solid #ccc;
+}
+
+.footer__bottom p {
+    margin: 0;
 }
 
 /* Responsive */
