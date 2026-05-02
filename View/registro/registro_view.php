@@ -46,7 +46,7 @@
                 REGISTRO DRIVO
             </h2>
             
-            <form action="../Controller/RegistroController.php" method="POST" class="mt-4 pt-3 row g-3 needs-validation" novalidate>
+            <form action="../Controller/registro.php" method="POST" class="mt-4 pt-3 row g-3 needs-validation" novalidate>
                 
                 <div class="col-md-6">
                     <label for="nombre" class="form-label fw-bold">Nombre</label>
