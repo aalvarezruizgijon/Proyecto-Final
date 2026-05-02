@@ -1,22 +1,8 @@
--- --------------------------------------------------------
--- Base de Datos para el Proyecto Final: DRIVO
--- Nivel: 2º DAW
--- --------------------------------------------------------
-
--- Se han limpiado los comentarios automáticos de HeidiSQL para que el script
--- sea más profesional y legible para la corrección del profesorado.
-
 CREATE DATABASE IF NOT EXISTS `drivo` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `drivo`;
 
 -- --------------------------------------------------------
 -- Tabla: clientes
--- Mejoras aplicadas: 
--- 1. Se añaden campos realistas (email, nombre, apellidos).
--- 2. Se elimina 'reservas_actuales' y 'reservas_totales' porque rompen la 3º Forma Normal (3FN). 
---    En bases de datos relacionales, esos datos se calculan con un COUNT() o JOIN desde la tabla 'reservas'.
--- 3. Se añade un campo 'rol' para diferenciar entre administrador y cliente normal.
--- 4. Se añade UNIQUE a usuario y email para que no haya duplicados.
 -- --------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `clientes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -33,12 +19,6 @@ CREATE TABLE IF NOT EXISTS `clientes` (
 
 -- --------------------------------------------------------
 -- Tabla: flota
--- Mejoras aplicadas:
--- 1. Se añaden campos realistas adaptados al catálogo del cliente (llantas, motor exacto, etc.).
--- 2. DECIMAL(10,2) para el precio. Es obligatorio usar DECIMAL para dinero (DOUBLE genera errores de redondeo).
--- 3. Se añade 'matricula' como un identificador único real.
--- 4. Se añade 'imagen' (VARCHAR) para guardar la ruta de la foto y mostrarla en la web.
--- 5. Se añade 'oferta' (TINYINT) para destacar vehículos en la portada.
 -- --------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `flota` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -60,11 +40,6 @@ CREATE TABLE IF NOT EXISTS `flota` (
 
 -- --------------------------------------------------------
 -- Tabla: reservas
--- Mejoras aplicadas:
--- 1. DECIMAL para todos los campos monetarios o de sanciones.
--- 2. Se añade un campo 'estado' para gestionar el ciclo de vida de la reserva.
--- 3. Renombrado 'id_user' a 'id_cliente' para que sea coherente con el nombre de la tabla.
--- 4. ON DELETE RESTRICT: Evita que se pueda borrar un cliente si tiene reservas asociadas (Muestra conocimientos de Integridad Referencial).
 -- --------------------------------------------------------
 CREATE TABLE IF NOT EXISTS `reservas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -87,7 +62,6 @@ CREATE TABLE IF NOT EXISTS `reservas` (
 
 -- --------------------------------------------------------
 -- DATOS DE EJEMPLO (Mock Data)
--- Insertar datos de prueba demuestra al tribunal que el script es funcional y está testeado.
 -- --------------------------------------------------------
 
 -- 1. Clientes (La contraseña es '1234' encriptada con BCRYPT, ideal para usar password_verify() en PHP)
@@ -95,7 +69,7 @@ INSERT INTO `clientes` (`usuario`, `passw`, `email`, `nombre`, `apellidos`, `rol
 ('admin', '$2y$10$Y1/YgO.5B/5Xf2v2L7aOVeS3o/H1R5J8tLgA91hL4rM/w9bVn28eO', 'admin@drivo.es', 'Admin', 'Principal', 'admin'),
 ('alumno', '$2y$10$Y1/YgO.5B/5Xf2v2L7aOVeS3o/H1R5J8tLgA91hL4rM/w9bVn28eO', 'alumno@drivo.es', 'Estudiante', 'DAW', 'cliente');
 
--- 2. Vehículos (Los 9 coches solicitados, marcados como oferta=1)
+-- 2. Vehículos
 INSERT INTO `flota` (`matricula`, `marca`, `modelo`, `motor`, `cambios`, `traccion`, `llantas`, `anio`, `precio_dia`, `imagen`, `oferta`) VALUES
 ('1111-AAA', 'Audi', 'A4', 'Gasolina 2.0 TFSI 197cv', 'Automática', 'a las 4 ruedas', 19, 2019, 75.00, 'audi_a4.avif', 1),
 ('2222-BBB', 'Porsche', 'Cayenne', 'Gasolina V6 Biturbo 500cv', 'Automática', 'a las 4 ruedas', 21, 2023, 145.00, 'porsche_cayenne.avif', 1),
