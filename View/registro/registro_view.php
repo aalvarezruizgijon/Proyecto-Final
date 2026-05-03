@@ -46,6 +46,12 @@
                 REGISTRO DRIVO
             </h2>
             
+            <?php if (isset($_GET['error']) && $_GET['error'] === 'duplicado'): ?>
+                <div class="alert alert-warning text-center mt-3 mb-0" role="alert">
+                    <i class="bi bi-exclamation-circle-fill"></i> El correo electrónico o usuario ya está registrado.
+                </div>
+            <?php endif; ?>
+            
             <form action="../Controller/registro.php" method="POST" class="mt-4 pt-3 row g-3 needs-validation" novalidate>
                 
                 <div class="col-md-6">

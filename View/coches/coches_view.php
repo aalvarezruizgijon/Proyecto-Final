@@ -34,11 +34,11 @@
                         </div>
 
                         <div class="info__container">
-                            <p><i class="bi bi-gear"></i> Tracción <?= $coche->getTraccion() ?></p>
-                            <p><i class="bi bi-life-preserver"></i> Monta llantas de <?= $coche->getLlantas() ?>"</p>
-                            <p><i class="bi bi-engine-fill"></i> Motor de <?= strtolower($coche->getMotor()) ?></p>
-                            <p><i class="bi bi-command"></i> Caja de cambios <?= strtolower($coche->getCambios()) ?></p>
-                            <p><i class="bi bi-calendar-event"></i> Año <?= $coche->getAnio() ?></p>
+                            <p><i class="bi bi-car-front"></i> Tracción <?= $coche->getTraccion() ?></p>
+                            <p><i class="bi bi-record-circle"></i> Monta llantas de <?= $coche->getLlantas() ?>"</p>
+                            <p><i class="bi bi-speedometer2"></i> Motor de <?= strtolower($coche->getMotor()) ?></p>
+                            <p><i class="bi bi-gear-wide-connected"></i> Caja de cambios <?= strtolower($coche->getCambios()) ?></p>
+                            <p><i class="bi bi-calendar-date"></i> Año <?= $coche->getAnio() ?></p>
                         </div>
 
                         <div class="reservar__container">

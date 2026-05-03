@@ -1,7 +1,9 @@
 <?php
 require_once '../Model/Cliente.php';
 
-session_start(); // Necesario para mantener al usuario conectado
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+} // Necesario para mantener al usuario conectado
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Recogemos el usuario (o email) y la contraseña del formulario
@@ -22,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     } else {
         // LOGIN INCORRECTO: Volvemos a la vista con un mensaje de error[cite: 1]
-        header('Location: ../View/login/login_view.php?error=auth');
+        header('Location: login.php?error=auth');
         exit;
     }
 } else {

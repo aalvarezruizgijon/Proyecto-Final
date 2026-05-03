@@ -1,4 +1,7 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require_once '../Model/Cliente.php';
 
 // Verificamos si se ha enviado el formulario por POST
@@ -23,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     } else {
         // ERROR: Redirigimos a la vista de registro avisando del fallo (ej: email duplicado)
-        header('Location: ../View/registro/registro_view.php?error=duplicado');
+        header('Location: registro.php?error=duplicado');
         exit;
     }
 } else {

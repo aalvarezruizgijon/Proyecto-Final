@@ -65,7 +65,7 @@ class Cliente {
     // Método para comprobar el login usando password_verify
     public static function login($usuario, $password) {
         $conexion = DrivoDB::connectDB();
-        $consulta = "SELECT * FROM clientes WHERE usuario = :usuario";
+        $consulta = "SELECT * FROM clientes WHERE usuario = :usuario OR email = :usuario";
         
         $stmt = $conexion->prepare($consulta);
         $stmt->bindParam(':usuario', $usuario);

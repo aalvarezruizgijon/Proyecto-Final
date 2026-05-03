@@ -45,15 +45,27 @@
                 LOGIN
             </h2>
             
+            <?php if (isset($_GET['error']) && $_GET['error'] === 'auth'): ?>
+                <div class="alert alert-danger text-center mt-3 mb-0" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill"></i> Usuario o contraseña incorrectos.
+                </div>
+            <?php endif; ?>
+
+            <?php if (isset($_GET['registro']) && $_GET['registro'] === 'exito'): ?>
+                <div class="alert alert-success text-center mt-3 mb-0" role="alert">
+                    <i class="bi bi-check-circle-fill"></i> Registro exitoso. Ahora puedes iniciar sesión.
+                </div>
+            <?php endif; ?>
+            
             <form action="../Controller/login.php" method="POST" class="mt-4 pt-3 needs-validation" novalidate>
                 
                 <div class="mb-3">
-                    <label for="email" class="form-label fw-bold">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" 
-                           placeholder="usuario@correo.com" 
+                    <label for="email" class="form-label fw-bold">Email o Usuario</label>
+                    <input type="text" class="form-control" id="email" name="email" 
+                           placeholder="usuario o correo" 
                            style="border-radius: 0.8rem;" required>
                     <div class="invalid-feedback">
-                        Por favor, introduce un email válido.
+                        Por favor, introduce tu email o usuario.
                     </div>
                 </div>
 

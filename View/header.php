@@ -11,7 +11,15 @@
             <a class="link" href="./contacto.php">Contactanos</a>
         </nav>
         <div class="icon--user">
-            <i class="bi bi-person-fill icon"></i>
+            <?php if (isset($_SESSION['id_cliente'])): ?>
+                <a href="./logout.php" title="Cerrar sesión" style="color: inherit; text-decoration: none;">
+                    <i class="bi bi-box-arrow-right icon"></i>
+                </a>
+            <?php else: ?>
+                <a href="./login.php" title="Iniciar sesión" style="color: inherit; text-decoration: none;">
+                    <i class="bi bi-person-fill icon"></i>
+                </a>
+            <?php endif; ?>
         </div>
     </div>
 </header>

@@ -49,18 +49,18 @@
             <!-- Columna Izquierda: Imagen y Detalles -->
             <div class="col-lg-7">
                 <div class="oferta p-0 w-100" style="border-radius: 1.5rem; overflow: hidden;">
-                    <img src="../View/img/coches/<?= $coche->getImagen() ?>" class="img-reserva" alt="<?= $coche->getNombreCompleto() ?>">
+                    <img src="../View/img/coches/<?= pathinfo($coche->getImagen(), PATHINFO_FILENAME) ?>--sin_fondo.png" class="img-reserva" alt="<?= $coche->getNombreCompleto() ?>">
                     
                     <div class="p-4">
                         <h2 class="text-uppercase fw-bold mb-3" style="color: #152D51;"><?= $coche->getNombreCompleto() ?></h2>
                         <div class="row info__container p-0">
                             <div class="col-md-6">
-                                <p><i class="bi bi-gear"></i> Tracción <?= $coche->getTraccion() ?></p>
-                                <p><i class="bi bi-engine-fill"></i> Motor <?= $coche->getMotor() ?></p>
+                                <p><i class="bi bi-car-front"></i> Tracción <?= $coche->getTraccion() ?></p>
+                                <p><i class="bi bi-speedometer2"></i> Motor <?= $coche->getMotor() ?></p>
                             </div>
                             <div class="col-md-6">
-                                <p><i class="bi bi-command"></i> Cambio <?= $coche->getCambios() ?></p>
-                                <p><i class="bi bi-calendar-event"></i> Año <?= $coche->getAnio() ?></p>
+                                <p><i class="bi bi-gear-wide-connected"></i> Cambio <?= $coche->getCambios() ?></p>
+                                <p><i class="bi bi-calendar-date"></i> Año <?= $coche->getAnio() ?></p>
                             </div>
                         </div>
                     </div>
