@@ -26,6 +26,6 @@
     </div>
 
     <div class="footer__bottom">
-        <p>Derechos de autor a Drivo© 2025</p>
+        <p>Derechos de autor a Drivo© 2026</p>
     </div>
 </footer>
