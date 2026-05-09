@@ -14,8 +14,8 @@ class Reserva {
     private $precio_total;
     private $estado;
 
-    // No guardada directamente en la tabla, pero útil para mostrar datos
-    private $vehiculoAsociado; 
+    // Este campo no esta en la tabla pero me viene bien para mostrar datos del coche
+    private $vehiculoAsociado;
 
     public function __construct($id_vehiculo, $id_cliente, $fecha_inicio, $fecha_fin, $precio_total, $estado = 'Pendiente', $sancion_km = 0, $sancion_tiempo = 0, $fecha_reserva = null, $id = null) {
         $this->id = $id;
@@ -49,7 +49,7 @@ class Reserva {
 
     // --- MÉTODOS DE BASE DE DATOS --- //
 
-    // Crear una nueva reserva
+    // Meto la reserva nueva en la base de datos
     public function insert() {
         $conexion = DrivoDB::connectDB();
         $insercion = "INSERT INTO reservas (id_vehiculo, id_cliente, fecha_inicio, fecha_fin, precio_total, estado) 
@@ -65,17 +65,15 @@ class Reserva {
 
         if ($stmt->execute()) {
             $this->id = $conexion->lastInsertId();
-            // Marcar el vehículo como no disponible
-            Vehiculo::setDisponibilidad($this->id_vehiculo, 0);
             return true;
         }
         return false;
     }
 
-    // Obtener todas las reservas de un cliente en concreto (mas que nada para el "Mi Perfil")
+    // Obtengo todas las reservas de un cliente para mostrarlas en su perfil
     public static function getReservasByCliente($id_cliente) {
         $conexion = DrivoDB::connectDB();
-        // Ordenamos por fecha de inicio para que salgan primero las más inminentes
+        // Ordeno por fecha para que salgan las mas proximas primero
         $consulta = "SELECT * FROM reservas WHERE id_cliente = :id_cliente ORDER BY fecha_inicio ASC";
         $stmt = $conexion->prepare($consulta);
         $stmt->bindParam(':id_cliente', $id_cliente);
@@ -92,11 +90,33 @@ class Reserva {
         return $reservas;
     }
 
-    // Cancelar una reserva (Pasa el estado a Cancelada y libera el coche)
+    // Saco las reservas activas de un coche para comprobar si las fechas estan libres
+    public static function getReservasActivasByVehiculo($id_vehiculo) {
+        $conexion = DrivoDB::connectDB();
+        // Solo las que no esten canceladas y que todavia no hayan pasado
+        $consulta = "SELECT fecha_inicio, fecha_fin FROM reservas 
+                     WHERE id_vehiculo = :id_vehiculo 
+                     AND estado NOT IN ('Cancelada', 'Completada') 
+                     AND fecha_fin >= CURDATE()";
+        $stmt = $conexion->prepare($consulta);
+        $stmt->bindParam(':id_vehiculo', $id_vehiculo);
+        $stmt->execute();
+        
+        $fechas = [];
+        while ($registro = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $fechas[] = [
+                'inicio' => $registro['fecha_inicio'],
+                'fin' => $registro['fecha_fin']
+            ];
+        }
+        return $fechas;
+    }
+
+    // Cancelo una reserva y cambio su estado
     public static function cancelar($id_reserva) {
         $conexion = DrivoDB::connectDB();
         
-        // Primero obtenemos la reserva para saber qué coche hay que liberar
+        // Primero busco la reserva para saber de que coche es
         $consultaSelect = "SELECT id_vehiculo FROM reservas WHERE id = :id";
         $stmtSelect = $conexion->prepare($consultaSelect);
         $stmtSelect->bindParam(':id', $id_reserva);
@@ -112,8 +132,6 @@ class Reserva {
             $stmtUpdate->bindParam(':id', $id_reserva);
             
             if ($stmtUpdate->execute()) {
-                // Liberamos el coche
-                Vehiculo::setDisponibilidad($id_vehiculo, 1);
                 return true;
             }
         }

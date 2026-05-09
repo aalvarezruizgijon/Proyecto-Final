@@ -46,11 +46,7 @@
                                 <span class="price-label">PRECIO:</span>
                                 <span class="price-value"><?= $coche->getPrecioDia() ?>€/día</span>
                             </div>
-                            <?php if ($coche->getDisponible() == 1): ?>
-                                <a href="reservar.php?id=<?= $coche->getId() ?>" class="btn__reservar">RESERVAR AHORA</a>
-                            <?php else: ?>
-                                <button class="btn__reservar" style="background-color: #6c757d; cursor: not-allowed;" disabled>NO DISPONIBLE</button>
-                            <?php endif; ?>
+                            <a href="reservar.php?id=<?= $coche->getId() ?>" class="btn__reservar">RESERVAR AHORA</a>
                         </div>
                     </div>
                 <?php endforeach; ?>

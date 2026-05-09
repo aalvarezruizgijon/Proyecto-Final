@@ -1,0 +1,43 @@
+/* --- UTILIDADES GENERALES --- */
+.text-primary-drivo { color: #152D51; }
+.text-secondary-drivo { color: #7BD5AB; }
+.bg-primary-drivo { background-color: #152D51; }
+.bg-secondary-drivo { background-color: #7BD5AB; }
+.rounded-custom { border-radius: 0.8rem; }
+.rounded-custom-lg { border-radius: 1.5rem; }
+.border-transparent { border-color: rgba(255,255,255,0.2); }
+.opacity-85 { opacity: 0.85; }
+.icon-xl { font-size: 4rem; }
+
+/* --- VISTA RESERVA --- */
+.reserva-container { padding-top: 3rem; padding-bottom: 5rem; }
+.oferta-detalle { border-radius: 1.5rem; overflow: hidden; }
+.modelo-reserva {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 240px;
+}
+.img-reserva {
+    width: 100%;
+    border-radius: 1rem;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.price-summary {
+    background-color: #f8f9fa;
+    border-radius: 0.8rem;
+    border: 1px solid #dee2e6;
+}
+.btn-full {
+    width: 100%;
+    border: none;
+    background-color: #fff;
+    color: #152D51;
+    font-weight: bold;
+    padding: 12px;
+    border-radius: 0.8rem;
+    transition: background 0.3s;
+}
+.btn-full:hover { background-color: #7BD5AB; }

@@ -378,3 +378,15 @@ body {
         margin: 0 auto;
     }
 }
+
+/* --- UTILIDADES GENERALES --- */
+.text-primary-drivo { color: #152D51 !important; }
+.text-secondary-drivo { color: #7BD5AB !important; }
+.bg-primary-drivo { background-color: #152D51 !important; }
+.bg-secondary-drivo { background-color: #7BD5AB !important; }
+.rounded-custom { border-radius: 0.8rem !important; }
+.rounded-custom-lg { border-radius: 1.5rem !important; }
+.border-transparent { border-color: rgba(255,255,255,0.2) !important; }
+.opacity-85 { opacity: 0.85; }
+.icon-xl { font-size: 4rem; }
+

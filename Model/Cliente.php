@@ -32,16 +32,15 @@ class Cliente {
 
     // --- MÉTODOS DE BASE DE DATOS (CRUD y utilidades) --- //
 
-    // Método para registrar un nuevo cliente
+    // Registro de un nuevo cliente en la base de datos
     public function insert() {
         $conexion = DrivoDB::connectDB();
-        // Usamos sentencias preparadas para evitar Inyección SQL (¡Súper importante en los proyectos!)
         $insercion = "INSERT INTO clientes (usuario, passw, email, nombre, apellidos, rol) 
                       VALUES (:usuario, :passw, :email, :nombre, :apellidos, :rol)";
         
         $stmt = $conexion->prepare($insercion);
         
-        // Hasheamos la contraseña antes de guardarla por seguridad
+        // Hasheo la contraseña antes de guardarla, para que no se vea en texto plano
         $hashPass = password_hash($this->passw, PASSWORD_BCRYPT);
 
         $stmt->bindParam(':usuario', $this->usuario);
@@ -56,13 +55,13 @@ class Cliente {
             $this->id = $conexion->lastInsertId();
             return true;
         } catch (PDOException $e) {
-            // Manejar error de duplicados (email o usuario) u otros
+            // Si falla (por ejemplo email repetido) devuelvo false
             error_log("Error al insertar cliente: " . $e->getMessage());
             return false;
         }
     }
 
-    // Método para comprobar el login usando password_verify
+    // Compruebo el login con password_verify para comparar el hash
     public static function login($usuario, $password) {
         $conexion = DrivoDB::connectDB();
         $consulta = "SELECT * FROM clientes WHERE usuario = :usuario OR email = :usuario";
@@ -73,7 +72,7 @@ class Cliente {
         
         $registro = $stmt->fetch(PDO::FETCH_OBJ);
         
-        // Si el usuario existe y la contraseña coincide
+        // Si existe el usuario y la clave coincide con el hash devuelvo el objeto
         if ($registro && password_verify($password, $registro->passw)) {
             return new Cliente($registro->usuario, $registro->passw, $registro->email, 
                                $registro->nombre, $registro->apellidos, $registro->rol, 
@@ -82,7 +81,7 @@ class Cliente {
         return false;
     }
 
-    // Obtener un cliente por su ID
+    // Busco un cliente por su id, lo uso cuando necesito sus datos
     public static function getClienteById($id) {
         $conexion = DrivoDB::connectDB();
         $consulta = "SELECT * FROM clientes WHERE id = :id";

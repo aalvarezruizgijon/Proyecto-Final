@@ -54,7 +54,7 @@ class Vehiculo {
 
     // --- MÉTODOS DE BASE DE DATOS --- //
 
-    // Obtener todos los vehículos para mostrar en el catálogo general (o admin)
+    // Saco todos los coches para el admin o para el catalogo completo
     public static function getAll() {
         $conexion = DrivoDB::connectDB();
         $consulta = "SELECT * FROM flota";
@@ -72,7 +72,7 @@ class Vehiculo {
         return $vehiculos;
     }
 
-    // Obtener solo los disponibles para que los clientes puedan reservar
+    // Solo los que no estan reservados ahora mismo
     public static function getDisponibles() {
         $conexion = DrivoDB::connectDB();
         $consulta = "SELECT * FROM flota WHERE disponible = 1";
@@ -90,10 +90,18 @@ class Vehiculo {
         return $vehiculos;
     }
 
-    // Obtener solo los vehículos en oferta (disponibles y marcados como oferta)
+    // Los coches en oferta que ademas no esten reservados hoy
     public static function getOfertas() {
         $conexion = DrivoDB::connectDB();
-        $consulta = "SELECT * FROM flota WHERE disponible = 1 AND oferta = 1";
+        // Esta consulta filtra los que tienen una reserva activa justo hoy
+        $consulta = "SELECT f.* FROM flota f 
+                     WHERE f.disponible = 1 
+                     AND f.oferta = 1 
+                     AND f.id NOT IN (
+                        SELECT id_vehiculo FROM reservas 
+                        WHERE estado NOT IN ('Cancelada', 'Completada') 
+                        AND CURDATE() BETWEEN fecha_inicio AND fecha_fin
+                     )";
         $resultado = $conexion->query($consulta);
         
         $vehiculos = [];
@@ -108,7 +116,7 @@ class Vehiculo {
         return $vehiculos;
     }
 
-    // Obtener un coche por su ID
+    // Busco un coche por su id para cargarlo en la ficha
     public static function getById($id) {
         $conexion = DrivoDB::connectDB();
         $consulta = "SELECT * FROM flota WHERE id = :id";
@@ -129,7 +137,7 @@ class Vehiculo {
         return null;
     }
 
-    // Cambiar la disponibilidad de un vehículo (por ejemplo al confirmar una reserva)
+    // Cambio la disponibilidad del coche cuando sea necesario
     public static function setDisponibilidad($id, $estado) {
         $conexion = DrivoDB::connectDB();
         $consulta = "UPDATE flota SET disponible = :estado WHERE id = :id";

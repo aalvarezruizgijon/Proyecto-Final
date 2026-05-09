@@ -14,20 +14,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cliente = Cliente::login($user_input, $pass_input);
 
     if ($cliente) {
-        // LOGIN CORRECTO: Guardamos los datos en la sesión[cite: 1]
+        // Si ha entrado bien guardamos sus datos en la sesion
         $_SESSION['id_cliente'] = $cliente->getId();
         $_SESSION['nombre'] = $cliente->getNombre();
         $_SESSION['rol'] = $cliente->getRol();
         
-        // Redirigimos al index principal de la raíz[cite: 1]
+        // Lo mandamos a la pagina principal
         header('Location: ../index.php');
         exit;
     } else {
-        // LOGIN INCORRECTO: Volvemos a la vista con un mensaje de error[cite: 1]
+        // Si el login falla volvemos con un error
         header('Location: login.php?error=auth');
         exit;
     }
 } else {
-    // Si entran por GET, simplemente mostramos la vista[cite: 1]
+    // Si entra por GET mostramos el formulario
     include '../View/login/login_view.php';
 }

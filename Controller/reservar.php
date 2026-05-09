@@ -10,6 +10,11 @@ if ($id_coche) {
     $coche = Vehiculo::getById($id_coche);
 
     if ($coche) {
+        // Obtener las reservas activas para este coche
+        require_once '../Model/Reserva.php';
+        $reservasActivas = Reserva::getReservasActivasByVehiculo($id_coche);
+        $reservasJson = json_encode($reservasActivas);
+
         // Si el coche existe, cargamos la vista que acabamos de hacer
         include '../View/reservar/reservar_view.php';
     } else {
