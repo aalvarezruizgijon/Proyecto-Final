@@ -86,10 +86,10 @@
 
             <!-- Columna Derecha: Formulario -->
             <div class="col-lg-7">
-                <div class="oferta p-4 w-100 mt-5 mt-lg-0" style="position: relative;">
-                    <h2 class="modelo" style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: auto; height: 30px; padding: 0 20px; white-space: nowrap;">
-                        MENSAJE
-                    </h2>
+               <div class="oferta p-4 w-100 position-relative">
+                    <h2 class="modelo">
+                       MENSAJE
+                    </h2> 
 
                     <form action="" method="POST" class="mt-4 pt-3 needs-validation" novalidate>
                         <div class="row">
