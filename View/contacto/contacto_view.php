@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,13 +20,27 @@
             border-radius: 0.8rem;
             transition: background 0.3s;
         }
+
         .btn-full:hover {
-            background-color: #7BD5AB; /* Color secundario de Drivo */
+            background-color: #7BD5AB;
+            /* Color secundario de Drivo */
         }
+
         .contacto-container {
             padding-top: 4rem;
-            padding-bottom: 6rem;
+            padding-bottom: 8rem;
+            padding-left: 15px;
+            padding-right: 15px;
         }
+
+        @media (min-width: 992px) {
+            .contacto-container {
+                padding-top: 5rem;
+                padding-left: 0;
+                padding-right: 0;
+            }
+        }
+
         .info-box i {
             font-size: 1.5rem;
             color: #7BD5AB;
@@ -33,6 +48,7 @@
         }
     </style>
 </head>
+
 <body>
     <?php include '../View/header.php' ?>
 
@@ -42,7 +58,7 @@
             <div class="col-lg-5">
                 <h1 class="fw-bold mb-4" style="color: #152D51;">¿Hablamos?</h1>
                 <p class="mb-5 text-muted">Estamos aquí para ayudarte a que tu viaje sea perfecto. Si tienes dudas sobre nuestras tarifas o vehículos, no dudes en escribirnos.</p>
-                
+
                 <div class="info-box d-flex align-items-start mb-4">
                     <i class="bi bi-geo-alt-fill"></i>
                     <div>
@@ -70,10 +86,10 @@
 
             <!-- Columna Derecha: Formulario -->
             <div class="col-lg-7">
-                <div class="oferta p-4 w-100" style="position: relative;">
-                    <h2 class="modelo" style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 240px;">
-                        MENSAJE
-                    </h2>
+               <div class="oferta p-4 w-100 position-relative">
+                    <h2 class="modelo">
+                       MENSAJE
+                    </h2> 
 
                     <form action="" method="POST" class="mt-4 pt-3 needs-validation" novalidate>
                         <div class="row">
@@ -113,18 +129,19 @@
     <script>
         // Validación de Bootstrap
         (() => {
-          'use strict'
-          const forms = document.querySelectorAll('.needs-validation')
-          Array.from(forms).forEach(form => {
-            form.addEventListener('submit', event => {
-              if (!form.checkValidity()) {
-                event.preventDefault()
-                event.stopPropagation()
-              }
-              form.classList.add('was-validated')
-            }, false)
-          })
+            'use strict'
+            const forms = document.querySelectorAll('.needs-validation')
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
         })()
     </script>
 </body>
+
 </html>

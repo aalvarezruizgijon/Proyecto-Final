@@ -3,7 +3,7 @@ abstract class DrivoDB {
 private static $server = 'localhost';
 private static $db = 'drivo';
 private static $user = 'root';
-private static $password = '';
+private static $password = 'toor';
 public static function connectDB() {
 try {
 $connection = new PDO("mysql:host=".self::$server.";dbname=".self::$db.";charset=utf8", self::$user, self::$password);
