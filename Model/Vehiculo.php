@@ -146,5 +146,77 @@ class Vehiculo {
         $stmt->bindParam(':id', $id);
         return $stmt->execute();
     }
+
+    // Inserta un vehículo nuevo en la flota
+    public function insert() {
+        $conexion = DrivoDB::connectDB();
+        $insercion = "INSERT INTO flota (matricula, marca, modelo, motor, cambios, traccion, llantas, anio, precio_dia, imagen, disponible, oferta)
+                      VALUES (:matricula, :marca, :modelo, :motor, :cambios, :traccion, :llantas, :anio, :precio_dia, :imagen, :disponible, :oferta)";
+        $stmt = $conexion->prepare($insercion);
+        $stmt->bindParam(':matricula', $this->matricula);
+        $stmt->bindParam(':marca',     $this->marca);
+        $stmt->bindParam(':modelo',    $this->modelo);
+        $stmt->bindParam(':motor',     $this->motor);
+        $stmt->bindParam(':cambios',   $this->cambios);
+        $stmt->bindParam(':traccion',  $this->traccion);
+        $stmt->bindParam(':llantas',   $this->llantas);
+        $stmt->bindParam(':anio',      $this->anio);
+        $stmt->bindParam(':precio_dia',$this->precio_dia);
+        $stmt->bindParam(':imagen',    $this->imagen);
+        $stmt->bindParam(':disponible',$this->disponible);
+        $stmt->bindParam(':oferta',    $this->oferta);
+        try {
+            $stmt->execute();
+            $this->id = $conexion->lastInsertId();
+            return true;
+        } catch (PDOException $e) {
+            error_log("Error al insertar vehículo: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    // Actualiza los datos de un vehículo existente
+    public function update() {
+        $conexion = DrivoDB::connectDB();
+        $actualizacion = "UPDATE flota SET matricula=:matricula, marca=:marca, modelo=:modelo, motor=:motor,
+                          cambios=:cambios, traccion=:traccion, llantas=:llantas, anio=:anio,
+                          precio_dia=:precio_dia, imagen=:imagen, disponible=:disponible, oferta=:oferta
+                          WHERE id=:id";
+        $stmt = $conexion->prepare($actualizacion);
+        $stmt->bindParam(':matricula', $this->matricula);
+        $stmt->bindParam(':marca',     $this->marca);
+        $stmt->bindParam(':modelo',    $this->modelo);
+        $stmt->bindParam(':motor',     $this->motor);
+        $stmt->bindParam(':cambios',   $this->cambios);
+        $stmt->bindParam(':traccion',  $this->traccion);
+        $stmt->bindParam(':llantas',   $this->llantas);
+        $stmt->bindParam(':anio',      $this->anio);
+        $stmt->bindParam(':precio_dia',$this->precio_dia);
+        $stmt->bindParam(':imagen',    $this->imagen);
+        $stmt->bindParam(':disponible',$this->disponible);
+        $stmt->bindParam(':oferta',    $this->oferta);
+        $stmt->bindParam(':id',        $this->id);
+        try {
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            error_log("Error al actualizar vehículo: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    // Elimina un vehículo de la flota (solo si no tiene reservas activas)
+    public static function deleteById($id) {
+        $conexion = DrivoDB::connectDB();
+        $consulta = "DELETE FROM flota WHERE id = :id";
+        $stmt = $conexion->prepare($consulta);
+        $stmt->bindParam(':id', $id);
+        try {
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            // La FK bloqueará el borrado si tiene reservas asociadas
+            error_log("Error al eliminar vehículo: " . $e->getMessage());
+            return false;
+        }
+    }
 }
 ?>

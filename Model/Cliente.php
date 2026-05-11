@@ -98,5 +98,20 @@ class Cliente {
         }
         return null;
     }
+
+    public function getFechaRegistro() { return $this->fecha_registro; }
+
+    // Devuelve todos los clientes (para el panel admin)
+    public static function getAll() {
+        $conexion = DrivoDB::connectDB();
+        $resultado = $conexion->query("SELECT * FROM clientes ORDER BY fecha_registro DESC");
+        $clientes = [];
+        while ($registro = $resultado->fetch(PDO::FETCH_OBJ)) {
+            $clientes[] = new Cliente($registro->usuario, $registro->passw, $registro->email,
+                                      $registro->nombre, $registro->apellidos, $registro->rol,
+                                      $registro->id, $registro->fecha_registro);
+        }
+        return $clientes;
+    }
 }
 ?>

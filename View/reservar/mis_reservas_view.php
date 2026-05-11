@@ -41,7 +41,21 @@
                             <h4 class="text-primary-drivo mb-3 fs-5">Proxima Reserva: <?= $vehiculo->getNombreCompleto() ?> - Ref: DRV<?= str_pad($reserva->getId(), 6, "0", STR_PAD_LEFT) ?></h4>
                             <p class="mb-2 text-primary-drivo"><strong>Recogida:</strong> <?= date('d/m/Y, h A', strtotime($reserva->getFechaInicio())) ?>, Aeropuerto Sevilla</p>
                             <p class="mb-2 text-primary-drivo"><strong>Devolución:</strong> <?= date('d/m/Y, h A', strtotime($reserva->getFechaFin())) ?>, Aeropuerto Sevilla</p>
-                            <p class="mb-4 text-primary-drivo"><strong>Estado:</strong> Confirmada</p>
+                            <?php
+                                $estadoMap = [
+                                    'Pendiente'  => ['label' => 'Pendiente',   'color' => '#d97706', 'bg' => '#fef3c7'],
+                                    'Activa'     => ['label' => 'Confirmada',  'color' => '#065f46', 'bg' => '#d1fae5'],
+                                    'Finalizada' => ['label' => 'Finalizada',  'color' => '#6b7280', 'bg' => '#e5e7eb'],
+                                    'Cancelada'  => ['label' => 'Cancelada',   'color' => '#dc2626', 'bg' => '#fee2e2'],
+                                ];
+                                $est = $reserva->getEstado();
+                                $info = $estadoMap[$est] ?? ['label' => $est, 'color' => '#666', 'bg' => '#eee'];
+                            ?>
+                            <p class="mb-4 text-primary-drivo"><strong>Estado:</strong>
+                                <span style="background:<?= $info['bg'] ?>;color:<?= $info['color'] ?>;padding:3px 12px;border-radius:20px;font-size:.8rem;font-weight:600">
+                                    <?= $info['label'] ?>
+                                </span>
+                            </p>
                             
                             <a href="#" class="btn btn-outline-drivo">Ver Detalles / Modificar</a>
                         </div>
@@ -62,8 +76,13 @@
                 <div class="historial-list">
                     <?php foreach ($anteriores as $reserva): 
                         $vehiculo = $reserva->getVehiculo();
-                        $estado = $reserva->getEstado();
-                        $textoEstado = $estado === 'Cancelada' ? 'Cancelada' : 'Completada';
+                        $estadoMapH = [
+                                    'Pendiente'  => 'Pendiente',
+                                    'Activa'     => 'Activa',
+                                    'Finalizada' => 'Completada',
+                                    'Cancelada'  => 'Cancelada',
+                                ];
+                        $textoEstado = $estadoMapH[$reserva->getEstado()] ?? $reserva->getEstado();
                     ?>
                         <div class="card-historial mb-3 w-75">
                             <div class="row g-0 align-items-center">

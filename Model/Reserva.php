@@ -34,8 +34,11 @@ class Reserva {
     public function getId() { return $this->id; }
     public function getIdVehiculo() { return $this->id_vehiculo; }
     public function getIdCliente() { return $this->id_cliente; }
+    public function getFechaReserva() { return $this->fecha_reserva; }
     public function getFechaInicio() { return $this->fecha_inicio; }
     public function getFechaFin() { return $this->fecha_fin; }
+    public function getSancionKm() { return $this->sancion_km; }
+    public function getSancionTiempo() { return $this->sancion_tiempo; }
     public function getPrecioTotal() { return $this->precio_total; }
     public function getEstado() { return $this->estado; }
 
@@ -136,6 +139,37 @@ class Reserva {
             }
         }
         return false;
+    }
+
+    // Aplica o actualiza la sanción de una reserva (para el panel admin)
+    public static function updateSancion($id_reserva, $sancion_km, $sancion_tiempo) {
+        $conexion = DrivoDB::connectDB();
+        $consulta = "UPDATE reservas SET sancion_km = :sancion_km, sancion_tiempo = :sancion_tiempo WHERE id = :id";
+        $stmt = $conexion->prepare($consulta);
+        $stmt->bindParam(':sancion_km', $sancion_km);
+        $stmt->bindParam(':sancion_tiempo', $sancion_tiempo);
+        $stmt->bindParam(':id', $id_reserva);
+        return $stmt->execute();
+    }
+
+    // Devuelve TODAS las reservas con datos del cliente y del vehículo (para admin)
+    public static function getTodasReservas() {
+        $conexion = DrivoDB::connectDB();
+        $consulta = "SELECT r.*, c.nombre, c.apellidos, c.email, f.marca, f.modelo
+                     FROM reservas r
+                     JOIN clientes c ON r.id_cliente = c.id
+                     JOIN flota f ON r.id_vehiculo = f.id
+                     ORDER BY r.fecha_reserva DESC";
+        return $conexion->query($consulta)->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    // Cambia el estado de una reserva (para admin)
+    public static function updateEstado($id_reserva, $nuevoEstado) {
+        $conexion = DrivoDB::connectDB();
+        $stmt = $conexion->prepare("UPDATE reservas SET estado = :estado WHERE id = :id");
+        $stmt->bindParam(':estado', $nuevoEstado);
+        $stmt->bindParam(':id', $id_reserva);
+        return $stmt->execute();
     }
 }
 ?>
