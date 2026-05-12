@@ -28,7 +28,7 @@
 
     <main class="main__container detalle-container">
         <div class="container">
-            <a href="../reservar/mis_reservas_view.php" class="btn btn-link text-decoration-none text-primary-drivo mb-4 ps-0">
+            <a href="../Controller/reservas.php" class="btn btn-link text-decoration-none text-primary-drivo mb-4 ps-0">
                 <i class="bi bi-arrow-left"></i> Volver a mis reservas
             </a>
 
