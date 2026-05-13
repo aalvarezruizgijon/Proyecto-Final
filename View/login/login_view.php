@@ -47,7 +47,7 @@
             
             <?php if (isset($_GET['error']) && $_GET['error'] === 'auth'): ?>
                 <div class="alert alert-danger text-center mt-3 mb-0" role="alert">
-                    <i class="bi bi-exclamation-triangle-fill"></i> Usuario o contraseña incorrectos.
+                    <i class="bi bi-exclamation-triangle-fill"></i> Email o contraseña incorrectos.
                 </div>
             <?php endif; ?>
 
@@ -56,16 +56,22 @@
                     <i class="bi bi-check-circle-fill"></i> Registro exitoso. Ahora puedes iniciar sesión.
                 </div>
             <?php endif; ?>
+
+            <?php if (isset($_GET['reset']) && $_GET['reset'] === 'exito'): ?>
+                <div class="alert alert-success text-center mt-3 mb-0" role="alert">
+                    <i class="bi bi-check-circle-fill"></i> Contraseña restablecida correctamente. Ya puedes entrar.
+                </div>
+            <?php endif; ?>
             
             <form action="../Controller/login.php" method="POST" class="mt-4 pt-3 needs-validation" novalidate>
                 
                 <div class="mb-3">
-                    <label for="email" class="form-label fw-bold">Email o Usuario</label>
+                    <label for="email" class="form-label fw-bold">Email</label>
                     <input type="text" class="form-control" id="email" name="email" 
-                           placeholder="usuario o correo" 
+                           placeholder="Introduce tu correo" 
                            style="border-radius: 0.8rem;" required>
                     <div class="invalid-feedback">
-                        Por favor, introduce tu email o usuario.
+                        Por favor, introduce tu email.
                     </div>
                 </div>
 
@@ -76,6 +82,9 @@
                            style="border-radius: 0.8rem;" required>
                     <div class="invalid-feedback">
                         La contraseña es obligatoria.
+                    </div>
+                    <div class="text-end mt-1">
+                        <a href="recuperar.php" class="link" style="font-size:0.82rem;">¿Olvidaste tu contraseña?</a>
                     </div>
                 </div>
                 

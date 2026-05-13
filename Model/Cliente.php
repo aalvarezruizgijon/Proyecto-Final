@@ -113,5 +113,21 @@ class Cliente {
         }
         return $clientes;
     }
+
+    // Actualiza la contraseña de un cliente a partir de su email
+    public static function updatePassword(string $email, string $nuevaPass): bool {
+        $conexion  = DrivoDB::connectDB();
+        $hashPass  = password_hash($nuevaPass, PASSWORD_BCRYPT);
+        $consulta  = "UPDATE clientes SET passw = :passw WHERE email = :email";
+        $stmt      = $conexion->prepare($consulta);
+        $stmt->bindParam(':passw', $hashPass);
+        $stmt->bindParam(':email', $email);
+        try {
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            error_log('Error al actualizar contraseña: ' . $e->getMessage());
+            return false;
+        }
+    }
 }
 ?>

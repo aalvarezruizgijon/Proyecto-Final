@@ -147,6 +147,15 @@ class Vehiculo {
         return $stmt->execute();
     }
 
+    // Alterna el estado de oferta del coche (0 → 1 o 1 → 0)
+    public static function toggleOferta($id) {
+        $conexion = DrivoDB::connectDB();
+        $consulta = "UPDATE flota SET oferta = IF(oferta = 1, 0, 1) WHERE id = :id";
+        $stmt = $conexion->prepare($consulta);
+        $stmt->bindParam(':id', $id);
+        return $stmt->execute();
+    }
+
     // Inserta un vehículo nuevo en la flota
     public function insert() {
         $conexion = DrivoDB::connectDB();

@@ -32,14 +32,14 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `usuario` (`usuario`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Volcando datos para la tabla drivo.clientes: ~4 rows (aproximadamente)
 INSERT INTO `clientes` (`id`, `usuario`, `passw`, `email`, `nombre`, `apellidos`, `rol`, `fecha_registro`) VALUES
 	(1, 'admin', '$2y$10$Y1/YgO.5B/5Xf2v2L7aOVeS3o/H1R5J8tLgA91hL4rM/w9bVn28eO', 'admin@drivo.es', 'Admin', 'Principal', 'admin', '2026-05-02 09:50:04'),
 	(2, 'alumno', '$2y$10$Y1/YgO.5B/5Xf2v2L7aOVeS3o/H1R5J8tLgA91hL4rM/w9bVn28eO', 'alumno@drivo.es', 'Estudiante', 'DAW', 'cliente', '2026-05-02 09:50:04'),
 	(3, 'pepe@pepe.com', '$2y$10$BHPQdN/NepWgDNnlfuubQejarxw2GB7FrdsGg4J64McbMH9sNvEzq', 'pepe@pepe.com', 'pepe', 'pepe', 'cliente', '2026-05-03 09:07:09'),
-	(4, 'aalvarez@gmail.com', '$2y$10$m4s/GAuiHrmO1RYjoNSvvuiG5vKKe9lwBW62gn4r.v.LLAO1tR.oK', 'aalvarez@gmail.com', 'Adrian', 'Alvarez', 'cliente', '2026-05-03 09:08:31');
+	(5, 'adrianalvarezfer8@gmail.com', '$2y$10$MlrLQMBFaCDeHOdtZ1S6e.JIIRH52uWAGbA2SyE.fQjtakeyiZt3a', 'adrianalvarezfer8@gmail.com', 'Adrián', 'Álvarez Fernández', 'admin', '2026-05-10 20:53:33');
 
 -- Volcando estructura para tabla drivo.flota
 CREATE TABLE IF NOT EXISTS `flota` (
@@ -58,9 +58,9 @@ CREATE TABLE IF NOT EXISTS `flota` (
   `oferta` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `matricula` (`matricula`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla drivo.flota: ~9 rows (aproximadamente)
+-- Volcando datos para la tabla drivo.flota: ~10 rows (aproximadamente)
 INSERT INTO `flota` (`id`, `matricula`, `marca`, `modelo`, `motor`, `cambios`, `traccion`, `llantas`, `anio`, `precio_dia`, `imagen`, `disponible`, `oferta`) VALUES
 	(1, '1111-AAA', 'Audi', 'A4', 'Gasolina 2.0 TFSI 197cv', 'Automática', 'a las 4 ruedas', 19, 2019, 75.00, 'audi_a4.avif', 1, 1),
 	(2, '2222-BBB', 'Porsche', 'Cayenne', 'Gasolina V6 Biturbo 500cv', 'Automática', 'a las 4 ruedas', 21, 2023, 145.00, 'porsche_cayenne.jpg', 1, 1),
@@ -68,9 +68,23 @@ INSERT INTO `flota` (`id`, `matricula`, `marca`, `modelo`, `motor`, `cambios`, `
 	(4, '4444-DDD', 'Volkswagen', 'Golf', 'Gasolina 2.0 TFSI 241cv', 'Automática', 'a las 4 ruedas', 19, 2025, 99.00, 'volkswagen_golf_gti.avif', 1, 1),
 	(5, '5555-EEE', 'Ford', 'Explorer', 'Gasolina 2.3 EcoBoost 300cv', 'Automática', 'a las 4 ruedas', 19, 2025, 69.00, 'ford_explorer.webp', 1, 1),
 	(6, '6666-FFF', 'Mazda', 'CX-5', 'Gasolina 2.0 165cv', 'Manual 6v', 'Delantera', 19, 2021, 55.00, 'mazda_cx-5.webp', 1, 1),
-	(7, '7777-GGG', 'Renault', 'Arkana', 'E-TECH Híbrido 140 CV', 'Automática', 'Delantera', 18, 2021, 65.00, 'renault_arkana.avif', 1, 0),
+	(7, '7777-GGG', 'Renault', 'Arkana', 'E-TECH Híbrido 140 CV', 'Automática', 'Delantera', 18, 2021, 65.00, 'renault_arkana.avif', 1, 1),
 	(8, '8888-HHH', 'Peugeot', '3008', 'Diésel 1.5 BlueHDi 130cv', 'Automática', 'Delantera', 18, 2022, 35.00, 'peugeot_3008.webp', 1, 0),
-	(9, '9999-JJJ', 'Citroën', 'C3', 'Gasolina 1.2 PureTech 82cv', 'Manual 6v', 'Delantera', 17, 2020, 29.00, 'citroen_c3.jpg', 1, 0);
+	(9, '9999-JJJ', 'Citroën', 'C3', 'Gasolina 1.2 PureTech 82cv', 'Manual 6v', 'Delantera', 17, 2020, 29.00, 'citroen_c3.jpg', 1, 0),
+	(11, '7430-CWX', 'Volkswagen', 'Golf V', 'Gasoil 2.0l TDI 140cv', 'Manual 6v', 'Delantera', 16, 2004, 600.00, 'volkswagen_golf_v.webp', 1, 0);
+
+-- Volcando estructura para tabla drivo.password_resets
+CREATE TABLE IF NOT EXISTS `password_resets` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(100) NOT NULL,
+  `codigo` varchar(6) NOT NULL,
+  `expira_en` datetime NOT NULL,
+  `usado` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `idx_email` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Volcando datos para la tabla drivo.password_resets: ~0 rows (aproximadamente)
 
 -- Volcando estructura para tabla drivo.reservas
 CREATE TABLE IF NOT EXISTS `reservas` (
@@ -89,11 +103,11 @@ CREATE TABLE IF NOT EXISTS `reservas` (
   KEY `idx_cliente` (`id_cliente`),
   CONSTRAINT `fk_reserva_cliente` FOREIGN KEY (`id_cliente`) REFERENCES `clientes` (`id`) ON UPDATE CASCADE,
   CONSTRAINT `fk_reserva_vehiculo` FOREIGN KEY (`id_vehiculo`) REFERENCES `flota` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla drivo.reservas: ~0 rows (aproximadamente)
+-- Volcando datos para la tabla drivo.reservas: ~1 rows (aproximadamente)
 INSERT INTO `reservas` (`id`, `id_vehiculo`, `id_cliente`, `fecha_reserva`, `fecha_inicio`, `fecha_fin`, `sancion_km`, `sancion_tiempo`, `precio_total`, `estado`) VALUES
-	(1, 6, 2, '2026-05-02 09:50:04', '2026-05-02', '2026-05-05', 0.00, 0.00, 165.00, 'Activa');
+	(7, 1, 5, '2026-05-12 20:59:23', '2026-05-13', '2026-05-13', 150.00, 20.00, 150.00, 'Activa');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
