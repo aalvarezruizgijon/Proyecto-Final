@@ -7,54 +7,20 @@
     <title>Drivo | Contáctanos</title>
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Iconos Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- CSS normal -->
     <link rel="stylesheet" href="../View/css/style.css">
-    <style>
-        .btn-full {
-            width: 100%;
-            border: none;
-            background-color: #fff;
-            color: #152D51;
-            font-weight: bold;
-            padding: 12px;
-            border-radius: 0.8rem;
-            transition: background 0.3s;
-        }
-
-        .btn-full:hover {
-            background-color: #7BD5AB;
-            /* Color secundario de Drivo */
-        }
-
-        .contacto-container {
-            padding-top: 4rem;
-            padding-bottom: 8rem;
-            padding-left: 15px;
-            padding-right: 15px;
-        }
-
-        @media (min-width: 992px) {
-            .contacto-container {
-                padding-top: 5rem;
-                padding-left: 0;
-                padding-right: 0;
-            }
-        }
-
-        .info-box i {
-            font-size: 1.5rem;
-            color: #7BD5AB;
-            margin-right: 15px;
-        }
-    </style>
+    <link rel="shortcut icon" href="../View/img/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="../View/css/contacto.css">
 </head>
 
 <body>
+    <!-- HEADER -->
     <?php include '../View/header.php' ?>
 
     <main class="main__container contacto-container">
         <div class="row g-5">
-            <!-- Columna Izquierda: Información de contacto -->
             <div class="col-lg-5">
                 <h1 class="fw-bold mb-4" style="color: #152D51;">¿Hablamos?</h1>
                 <p class="mb-5 text-muted">Estamos aquí para ayudarte a que tu viaje sea perfecto. Si tienes dudas sobre nuestras tarifas o vehículos, no dudes en escribirnos.</p>
@@ -84,12 +50,11 @@
                 </div>
             </div>
 
-            <!-- Columna Derecha: Formulario -->
             <div class="col-lg-7">
-               <div class="oferta p-4 w-100 position-relative">
+                <div class="oferta p-4 w-100 position-relative">
                     <h2 class="modelo">
-                       MENSAJE
-                    </h2> 
+                        MENSAJE
+                    </h2>
 
                     <form action="" method="POST" class="mt-4 pt-3 needs-validation" novalidate>
                         <div class="row">
@@ -123,11 +88,11 @@
             </div>
         </div>
     </main>
-
+    <!-- FOOTER -->
     <?php include '../View/footer.php' ?>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Validación de Bootstrap
         (() => {
             'use strict'
             const forms = document.querySelectorAll('.needs-validation')
