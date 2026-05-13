@@ -25,6 +25,7 @@ body {
     width: 100%;
     height: 80px;
     text-align: center;
+    background-color: white;
 
 }
 
@@ -379,6 +380,88 @@ body {
     }
 }
 
+/* --- HEADER & NAVIGATION (Bootstrap Optimized) --- */
+
+/* Ajustamos el contenedor del header para que sea flexible */
+.header__container {
+    background-color: white;
+    min-height: 80px; /* Cambiado de height a min-height para que crezca al abrir el menú */
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+}
+
+.navbar {
+    z-index: 1050;
+    width: 100%;
+}
+
+/* Enlaces del Nav */
+.nav-link {
+    text-decoration: none;
+    color: #152D51 !important;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+/* EFECTO HOVER: Color verde Drivo */
+.nav-link:hover {
+    color: #7BD5AB !important;
+    transform: translateY(-2px);
+}
+
+/* Contenedor del icono de usuario */
+.icon--user {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.icon--user:hover {
+    background-color: #eee !important;
+    transform: scale(1.1);
+}
+
+.icon {
+    font-size: 1.5rem;
+    color: #152D51;
+    transition: color .3s;
+}
+
+/* --- RESPONSIVE (Móvil y Tablet) --- */
+
+@media (max-width: 991px) {
+    /* El menú desplegable */
+    .navbar-collapse {
+        background-color: white;
+        padding: 1.5rem;
+        border-radius: 0 0 1rem 1rem;
+        box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        /* Asegura que aparezca por encima del contenido */
+        position: absolute;
+        top: 100%; /* Justo debajo del header */
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+    
+    .nav-link {
+        padding: 15px 0 !important;
+        border-bottom: 1px solid #f8f9fa;
+        text-align: center;
+    }
+
+    /* Evita que el botón de usuario se vea raro en móvil */
+    .icon--user {
+        margin: 15px auto 0 auto;
+    }
+}
+
 /* --- UTILIDADES GENERALES --- */
 .text-primary-drivo { color: #152D51 !important; }
 .text-secondary-drivo { color: #7BD5AB !important; }
@@ -389,4 +472,4 @@ body {
 .border-transparent { border-color: rgba(255,255,255,0.2) !important; }
 .opacity-85 { opacity: 0.85; }
 .icon-xl { font-size: 4rem; }
-
+
