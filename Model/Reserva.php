@@ -171,5 +171,24 @@ class Reserva {
         $stmt->bindParam(':id', $id_reserva);
         return $stmt->execute();
     }
+
+    // Actualiza fechas y precio total de una reserva existente
+public static function actualizarFechasYPrecio($id, $fecha_inicio, $fecha_fin, $precio_total) {
+    $conexion = DrivoDB::connectDB();
+    $consulta = "UPDATE reservas 
+                 SET fecha_inicio = :fecha_inicio, 
+                     fecha_fin = :fecha_fin, 
+                     precio_total = :precio_total 
+                 WHERE id = :id";
+    
+    $stmt = $conexion->prepare($consulta);
+    $stmt->bindParam(':fecha_inicio', $fecha_inicio);
+    $stmt->bindParam(':fecha_fin', $fecha_fin);
+    $stmt->bindParam(':precio_total', $precio_total);
+    $stmt->bindParam(':id', $id);
+    
+    return $stmt->execute();
+}
+
 }
 ?>
