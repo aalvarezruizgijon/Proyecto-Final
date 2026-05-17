@@ -71,12 +71,23 @@ $mensaje_exito = isset($_GET['success']) ? "Reserva actualizada con éxito" : nu
 
                             <div class="col-lg-7">
                                 <div class="row g-4">
+                                    <?php $recogidaFutura = $reserva_detalle->getFechaInicio() < date('Y-m-d'); ?>
                                     <div class="col-sm-6">
-                                        <label class="info-label mb-2 d-block">Fecha de Recogida</label>
-                                        <input type="date" name="nueva_fecha_inicio" id="edit_fecha_inicio" 
+                                        <label class="info-label mb-2 d-block">
+                                            Fecha de Recogida
+                                            <?php if ($recogidaFutura): ?>
+                                                <i class="bi bi-lock-fill ms-1 text-muted" title="No se puede modificar una vez confirmada"></i>
+                                            <?php endif; ?>
+                                        </label>
+                                        <input type="date" id="edit_fecha_inicio" 
                                                class="form-control rounded-custom border-2" 
                                                value="<?= $reserva_detalle->getFechaInicio() ?>" 
-                                               min="<?= date('Y-m-d') ?>">
+                                               min="<?= date('Y-m-d') ?>"
+                                               <?= $recogidaFutura ? 'disabled' : 'name="nueva_fecha_inicio"' ?>>
+                                        <?php if ($recogidaFutura): ?>
+                                            <input type="hidden" name="nueva_fecha_inicio" value="<?= $reserva_detalle->getFechaInicio() ?>">
+                                            <small class="text-muted mt-1 d-block"><i class="bi bi-info-circle me-1"></i>Solo puedes modificar la fecha de devolución.</small>
+                                        <?php endif; ?>
                                     </div>
 
                                     <div class="col-sm-6">
@@ -134,6 +145,10 @@ $mensaje_exito = isset($_GET['success']) ? "Reserva actualizada con éxito" : nu
         const inputInicio = document.getElementById('edit_fecha_inicio');
         const inputFin = document.getElementById('edit_fecha_fin');
         const precioDia = parseFloat(document.getElementById('precio_dia_coche').value);
+
+        // Fechas originales de la reserva (para detectar si el usuario las cambió)
+        const fechaInicioOriginal = inputInicio.value;
+        const fechaFinOriginal = inputFin.value;
         
         const txtNumDias = document.getElementById('txt-num-dias');
         const txtSubtotalDias = document.getElementById('txt-subtotal-dias');
@@ -154,12 +169,18 @@ $mensaje_exito = isset($_GET['success']) ? "Reserva actualizada con éxito" : nu
                 const diffTime = Math.abs(f2 - f1);
                 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
                 let subtotalBase = diffDays * precioDia;
-                
-                const msDiferencia = f1.getTime() - hoy.getTime();
+
+                // Solo se aplica el recargo si las fechas han cambiado respecto a las originales
+                const fechasCambiadas = (inputInicio.value !== fechaInicioOriginal || inputFin.value !== fechaFinOriginal);
+
+                // Los días faltantes se miden desde HOY hasta la fecha ORIGINAL de la reserva
+                const fOriginal = new Date(fechaInicioOriginal);
+                fOriginal.setHours(0, 0, 0, 0);
+                const msDiferencia = fOriginal.getTime() - hoy.getTime();
                 const diasFaltantes = msDiferencia / (1000 * 60 * 60 * 24);
 
                 let montoRecargo = 0;
-                if (diasFaltantes <= 1) {
+                if (fechasCambiadas && diasFaltantes <= 1) {
                     montoRecargo = subtotalBase * 0.20;
                     filaRecargo.classList.remove('d-none');
                 } else {
