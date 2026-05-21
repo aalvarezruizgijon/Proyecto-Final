@@ -23,6 +23,12 @@
                     <a class="nav-link fw-bold px-3 text-primary-drivo" href="./contacto.php">Contactanos</a>
                 </li>
                 
+                <li class="nav-item">
+                    <a class="nav-link fw-bold px-3 text-primary-drivo" href="./ayuda.php">
+                        <i class="bi bi-question-circle me-1"></i>Ayuda
+                    </a>
+                </li>
+
                 <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
                     <div class="icon--user d-flex justify-content-center align-items-center shadow-sm" style="width: 45px; height: 45px; border-radius: 50%; background-color: #f8f9fa;">
                         <?php if (isset($_SESSION['id_cliente'])): ?>
