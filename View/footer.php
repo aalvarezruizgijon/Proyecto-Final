@@ -12,6 +12,7 @@
             <ul class="footer__links">
                 <li><a href="../Controller/index.php">· Pagina Principal</a></li>
                 <li><a href="../Controller/coches.php">· Ver coches</a></li>
+                <li><a href="../Controller/reservar.php">· Reservar coche</a></li>
                 <li><a href="../Controller/reservas.php">· Mis reservas</a></li>
                 <li><a href="../Controller/contacto.php">· Contactanos</a></li>
             </ul>

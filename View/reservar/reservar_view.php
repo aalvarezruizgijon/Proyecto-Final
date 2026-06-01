@@ -80,7 +80,7 @@
                                 <img src="../View/img/coches/<?= pathinfo($coche->getImagen(), PATHINFO_FILENAME) ?>--sin_fondo.png" 
                                      class="card-img-top img-fluid p-2" 
                                      alt="<?= $coche->getNombreCompleto() ?>" 
-                                     style="max-height: 140px; object-fit: contain;"> 
+                                     style="max-height: 240px; object-fit: contain;"> 
                                 
                                 <div class="card-body d-flex flex-column p-2">
                                     <h5 class="card-title fw-bold text-uppercase text-primary-drivo m-0 mb-2"><?= $coche->getNombreCompleto() ?></h5>

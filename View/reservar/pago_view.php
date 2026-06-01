@@ -25,7 +25,8 @@
                             <div class="text-center mb-4">
                                 <img src="../View/img/coches/<?= pathinfo($coche->getImagen(), PATHINFO_FILENAME) ?>--sin_fondo.png" 
                                      alt="<?= $coche->getNombreCompleto() ?>" 
-                                     class="resumen-img img-fluid">
+                                     class="resumen-img img-fluid"
+                                     style="max-height: 240px; object-fit: contain;">
                             </div>
                             
                             <h4 class="mb-4 text-center text-md-start"><?= $coche->getNombreCompleto() ?></h4>
