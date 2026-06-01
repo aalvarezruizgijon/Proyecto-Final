@@ -2,6 +2,8 @@
 require_once 'auth.php';
 require_once '../Model/Vehiculo.php';
 
+$pagoCargado = false;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_coche = $_POST['id_coche'] ?? null;
     $fecha_inicio = $_POST['fecha_inicio'] ?? null;
@@ -20,13 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $precio_total = $dias * $coche->getPrecioDia();
 
             // Cargo la pagina de pago
+            $pagoCargado = true;
             include '../View/reservar/pago_view.php';
         } else {
-            header('Location: coches.php');
+            header('Location: reservar.php');
         }
     } else {
-        header('Location: coches.php');
+        header('Location: reservar.php');
     }
 } else {
-    header('Location: coches.php');
+    header('Location: reservar.php');
 }

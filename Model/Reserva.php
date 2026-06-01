@@ -213,19 +213,23 @@ public static function actualizarFechasYPrecio($id, $fecha_inicio, $fecha_fin, $
         $vehiculosLibres = [];
         // Mapeamos los registros de la tabla 'flota' usando el método constructor estático de tu clase Vehiculo
         while ($registro = $stmt->fetch(PDO::FETCH_OBJ)) {
-            // Nota: Asegúrate de que los atributos coincidan con las columnas de tu tabla 'flota'
-            $vehiculosLibres[] = new Vehiculo(
-                $registro->id, 
-                $registro->marca, 
-                $registro->modelo, 
-                $registro->precio_dia, 
-                $registro->imagen,
-                $registro->traccion ?? null,
-                $registro->motor ?? null,
-                $registro->cambios ?? null,
-                $registro->anio ?? null
-            );
-        }
+    // Mapeamos correctamente cada columna con la posición exacta del constructor de Vehiculo
+    $vehiculosLibres[] = new Vehiculo(
+        $registro->matricula,
+        $registro->marca,
+        $registro->modelo,
+        $registro->motor,
+        $registro->cambios,
+        $registro->traccion,
+        $registro->llantas,
+        $registro->anio,
+        $registro->precio_dia,
+        $registro->imagen,
+        $registro->disponible,
+        $registro->oferta,
+        $registro->id 
+    );
+}
         return $vehiculosLibres;
     }
 }

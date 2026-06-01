@@ -23,205 +23,153 @@
             <?php unset($_SESSION['mensaje_error']); ?>
         <?php endif; ?>
 
-        <div class="row g-5">
-            <div class="col-lg-7">
-                <div class="oferta oferta-detalle p-0 w-100">
-                    <img src="../View/img/coches/<?= pathinfo($coche->getImagen(), PATHINFO_FILENAME) ?>--sin_fondo.png" class="img-reserva" alt="<?= $coche->getNombreCompleto() ?>">
-                    
-                    <div class="p-4">
-                        <h2 class="text-uppercase fw-bold mb-3 text-primary-drivo"><?= $coche->getNombreCompleto() ?></h2>
-                        <div class="row info__container p-0">
-                            <div class="col-md-6">
-                                <p><i class="bi bi-car-front"></i> Tracción <?= $coche->getTraccion() ?></p>
-                                <p><i class="bi bi-speedometer2"></i> Motor <?= $coche->getMotor() ?></p>
-                            </div>
-                            <div class="col-md-6">
-                                <p><i class="bi bi-gear-wide-connected"></i> Cambio <?= $coche->getCambios() ?></p>
-                                <p><i class="bi bi-calendar-date"></i> Año <?= $coche->getAnio() ?></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-5">
-                <div class="oferta p-4 w-100 position-relative">
-                    <h2 class="modelo modelo-reserva">
-                        TU RESERVA
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-6">
+                <div class="oferta p-4 w-100 position-relative shadow-sm">
+                    <h2 class="modelo modelo-reserva text-center text-uppercase fw-bold mb-4">
+                        ¿Cuándo quieres tu coche?
                     </h2>
 
-                    <form action="../Controller/pago.php" method="POST" class="mt-4 needs-validation" novalidate>
+                    <form action="../Controller/reservar.php" method="POST" class="needs-validation" novalidate>
+                        <input type="hidden" name="action" value="buscar">
                         
                         <div id="alerta_reserva" class="alert alert-warning d-none rounded-custom mt-2" role="alert">
                             <i class="bi bi-exclamation-triangle-fill me-2"></i> <span id="mensaje_alerta"></span>
                         </div>
 
-                        <input type="hidden" name="id_coche" value="<?= $coche->getId() ?>">
-                        
-                        <div class="mb-3 mt-3">
+                        <div class="mb-3">
                             <label class="form-label fw-bold">Fecha de Recogida</label>
                             <input type="date" id="fecha_inicio" name="fecha_inicio" class="form-control rounded-custom" 
-                                   required onchange="validarFechas()">
+                                   value="<?= htmlspecialchars($fecha_inicio ?? '') ?>" required onchange="validarFechas()">
                         </div>
 
                         <div class="mb-4">
                             <label class="form-label fw-bold">Fecha de Devolución</label>
                             <input type="date" id="fecha_fin" name="fecha_fin" class="form-control rounded-custom" 
-                                   required onchange="calcularTotal()">
-                        </div>
-
-                        <div class="price-summary mb-4 p-3">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="fw-bold text-primary-drivo small">PRECIO POR DÍA</span>
-                                <span class="fw-bold text-primary-drivo"><?= $coche->getPrecioDia() ?>€</span>
-                            </div>
-                            <hr>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <span class="fw-bold text-primary-drivo">PRECIO TOTAL</span>
-                                <span id="precio_total" class="fw-bold text-secondary-drivo fs-4">0€</span>
-                            </div>
+                                   value="<?= htmlspecialchars($fecha_fin ?? '') ?>" required onchange="validarFechas()">
                         </div>
 
                         <div class="reservar__container m-0 p-1">
-                            <button type="submit" class="btn-full">
-                                CONFIRMAR RESERVA
+                            <button type="submit" id="btn-buscar" class="btn-full text-uppercase fw-bold">
+                                Buscar vehículos disponibles
                             </button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
+
+        <?php if (isset($busquedaRealizada) && $busquedaRealizada): ?>
+            <hr class="my-5" style="border-color: #152D51; opacity: 0.2;">
+            
+            <div class="mb-4">
+                <h3 class="fw-bold text-primary-drivo text-uppercase">Vehículos Disponibles</h3>
+                <p class="text-muted">Resultados libres para el periodo: <strong class="text-secondary-drivo"><?= date("d/m/Y", strtotime($fecha_inicio)) ?></strong> al <strong class="text-secondary-drivo"><?= date("d/m/Y", strtotime($fecha_fin)) ?></strong></p>
+            </div>
+
+            <?php if (empty($vehiculosDisponibles)): ?>
+                <div class="alert alert-warning rounded-custom p-4 border-0 shadow-sm" role="alert">
+                    <i class="bi bi-exclamation-circle-fill me-2 fs-5"></i> Lo sentimos, no quedan vehículos libres para el rango de fechas seleccionado. Intente con otras fechas.
+                </div>
+            <?php else: ?>
+                <div class="row row-cols-1 row-cols-md-2 col-lg-3 g-4">
+                    <?php foreach ($vehiculosDisponibles as $coche): ?>
+                        <div class="col">
+                            <div class="card h-100 shadow-sm border-0 rounded-custom p-3 bg-white" style="transition: transform 0.2s;">
+                                
+                                <img src="../View/img/coches/<?= pathinfo($coche->getImagen(), PATHINFO_FILENAME) ?>--sin_fondo.png" 
+                                     class="card-img-top img-fluid p-2" 
+                                     alt="<?= $coche->getNombreCompleto() ?>" 
+                                     style="max-height: 140px; object-fit: contain;"> 
+                                
+                                <div class="card-body d-flex flex-column p-2">
+                                    <h5 class="card-title fw-bold text-uppercase text-primary-drivo m-0 mb-2"><?= $coche->getNombreCompleto() ?></h5>
+                                    
+                                    <div class="row text-muted small g-2 mb-3">
+                                        <div class="col-6"><i class="bi bi-speedometer2 me-1"></i><?= $coche->getMotor() ?></div>
+                                        <div class="col-6"><i class="bi bi-gear-wide-connected me-1"></i><?= $coche->getCambios() ?></div>
+                                    </div>
+
+                                    <p class="text-success fw-bold fs-5 mb-3 mt-auto"><?= $coche->getPrecioDia() ?>€ <span class="fs-6 text-muted fw-normal">/ día</span></p>
+                                    
+                                    <form action="../Controller/pago.php" method="POST">
+    <input type="hidden" name="id_coche" value="<?= $coche->getId() ?>">
+    
+    <input type="hidden" name="fecha_inicio" value="<?= htmlspecialchars($fecha_inicio) ?>">
+    <input type="hidden" name="fecha_fin" value="<?= htmlspecialchars($fecha_fin) ?>">
+    
+    <button type="submit" class="btn-full py-2 fs-6">
+        RESERVAR ESTE COCHE
+    </button>
+</form>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
+
     </main>
 
     <?php include '../View/footer.php' ?>
 
     <script>
-        const precioPorDia = <?= $coche->getPrecioDia() ?>;
-        const reservasActivas = <?= $reservasJson ?? '[]' ?>;
+        document.addEventListener("DOMContentLoaded", function () {
+            const fInicio = document.getElementById('fecha_inicio');
+            const fFin = document.getElementById('fecha_fin');
 
-        // Pongo como minimo la fecha de hoy para que no se puedan elegir dias pasados
-        const hoy = new Date().toISOString().split('T')[0];
-        document.getElementById('fecha_inicio').min = hoy;
+            const hoy = new Date().toISOString().split('T')[0];
+            fInicio.min = hoy;
 
-        // Comprueba si las fechas elegidas se pisan con alguna reserva que ya existe
-        function checkOverlap(start, end) {
-            if (!start || !end) return null;
-            
-            for (let reserva of reservasActivas) {
-                if (start <= reserva.fin && end >= reserva.inicio) {
-                    return reserva; // Devuelve la reserva con la que choca
-                }
-            }
-            return null;
-        }
+            const hoyObj = new Date();
+            const maxInicioObj = new Date();
+            maxInicioObj.setMonth(hoyObj.getMonth() + 10);
+            fInicio.max = maxInicioObj.toISOString().split('T')[0];
+        });
 
         function validarFechas() {
             const fInicio = document.getElementById('fecha_inicio');
             const fFin = document.getElementById('fecha_fin');
-            
-            // La fecha de fin no puede ser antes que la de inicio
-            fFin.min = fInicio.value;
-            
-            if (fFin.value && fFin.value < fInicio.value) {
-                fFin.value = fInicio.value;
-            }
-            calcularTotal();
-        }
-
-        function calcularTotal() {
-            const inicioInput = document.getElementById('fecha_inicio');
-            const finInput = document.getElementById('fecha_fin');
-            const totalDisplay = document.getElementById('precio_total');
-            const btnSubmit = document.querySelector('.btn-full');
+            const btnSubmit = document.getElementById('btn-buscar');
             const alertaReserva = document.getElementById('alerta_reserva');
             const mensajeAlerta = document.getElementById('mensaje_alerta');
 
-            // Reseteo los errores antes de volver a comprobar
-            inicioInput.classList.remove('is-invalid');
-            finInput.classList.remove('is-invalid');
+            fInicio.classList.remove('is-invalid');
+            fFin.classList.remove('is-invalid');
             alertaReserva.classList.add('d-none');
-            inicioInput.setCustomValidity('');
-            finInput.setCustomValidity('');
             btnSubmit.disabled = false;
 
-            if (inicioInput.value && finInput.value) {
-                const overlap = checkOverlap(inicioInput.value, finInput.value);
-                if (overlap) {
-                    // Calcular el próximo día libre
-                    let nextFree = new Date(overlap.fin);
-                    nextFree.setDate(nextFree.getDate() + 1);
-                    let nextFreeStr = nextFree.toISOString().split('T')[0];
-                    
-                    // Asegurarnos de que el día siguiente no esté ocupado por OTRA reserva
-                    let overlapsAgain = true;
-                    while(overlapsAgain) {
-                        overlapsAgain = false;
-                        for (let r of reservasActivas) {
-                            if (nextFreeStr >= r.inicio && nextFreeStr <= r.fin) {
-                                nextFree = new Date(r.fin);
-                                nextFree.setDate(nextFree.getDate() + 1);
-                                nextFreeStr = nextFree.toISOString().split('T')[0];
-                                overlapsAgain = true;
-                                break;
-                            }
-                        }
-                    }
+            if (fInicio.value) {
+                fFin.min = fInicio.value;
+                if (fFin.value && fFin.value < fInicio.value) {
+                    fFin.value = fInicio.value;
+                }
+            }
 
-                    // Formateo la fecha a DD/MM/YYYY para que sea mas legible
-                    const partes = nextFreeStr.split('-');
-                    const fechaAmigable = `${partes[2]}/${partes[1]}/${partes[0]}`;
+            if (fInicio.value && fFin.value) {
+                const dateInicio = new Date(fInicio.value);
+                const dateFin = new Date(fFin.value);
 
-                    // Mostrar cuadrado de alerta arriba
-                    const mensaje = `Este vehículo está ocupado. Estará libre de nuevo a partir del ${fechaAmigable}.`;
-                    mensajeAlerta.innerText = mensaje;
+                const maxFinPermitido = new Date(dateInicio);
+                maxFinPermitido.setMonth(maxFinPermitido.getMonth() + 3);
+
+                if (dateFin > maxFinPermitido) {
+                    mensajeAlerta.innerText = "La duración máxima del alquiler no puede supercar los 3 meses.";
                     alertaReserva.classList.remove('d-none');
                     
-                    // También marcamos en rojo para que vean dónde está el error
-                    inicioInput.classList.add('is-invalid');
-                    finInput.classList.add('is-invalid');
-                    
-                    inicioInput.setCustomValidity('Fechas solapadas');
-                    finInput.setCustomValidity('Fechas solapadas');
+                    fInicio.classList.add('is-invalid');
+                    fFin.classList.add('is-invalid');
                     btnSubmit.disabled = true;
-                    totalDisplay.innerText = "0€";
-                    return;
                 }
-
-                const fecha1 = new Date(inicioInput.value);
-                const fecha2 = new Date(finInput.value);
-                
-                // Calculo cuantos dias son entre las dos fechas
-                const diffTime = fecha2 - fecha1;
-                // Le sumo 1 porque el dia de recogida tambien cuenta
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
-
-                if (diffDays > 0) {
-                    totalDisplay.innerText = (diffDays * precioPorDia) + "€";
-                } else {
-                    totalDisplay.innerText = "0€";
-                }
-            } else {
-                totalDisplay.innerText = "0€";
             }
         }
 
-        // Validación de Bootstrap
         (() => {
           'use strict'
           const forms = document.querySelectorAll('.needs-validation')
           Array.from(forms).forEach(form => {
             form.addEventListener('submit', event => {
-              const fInicio = document.getElementById('fecha_inicio').value;
-              const fFin = document.getElementById('fecha_fin').value;
-              
-              if (checkOverlap(fInicio, fFin)) {
-                  event.preventDefault();
-                  event.stopPropagation();
-                  document.getElementById('fecha_inicio').classList.add('is-invalid');
-                  document.getElementById('fecha_fin').classList.add('is-invalid');
-                  return;
-              }
-
               if (!form.checkValidity()) {
                 event.preventDefault()
                 event.stopPropagation()
@@ -230,60 +178,6 @@
             }, false)
           })
         })()
-    </script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const fInicio = document.getElementById('fecha_inicio');
-            const fFin = document.getElementById('fecha_fin');
-            const btnSubmit = document.querySelector('.btn-full');
-            const alertaReserva = document.getElementById('alerta_reserva');
-            const mensajeAlerta = document.getElementById('mensaje_alerta');
-
-            // 1. Limitar el selector de recogida nativo a un máximo de 10 meses a partir de hoy
-            const hoyObj = new Date();
-            const maxInicioObj = new Date();
-            maxInicioObj.setMonth(hoyObj.getMonth() + 10);
-            fInicio.max = maxInicioObj.toISOString().split('T')[0];
-
-            // 2. Extendemos tu función calcularTotal sin reescribir tu bloque de script original
-            const originalCalcularTotal = window.calcularTotal;
-            
-            window.calcularTotal = function() {
-                // Ejecuta primero tus validaciones por defecto (reseteos y solapamientos de fechas)
-                originalCalcularTotal();
-
-                // Si tu función ya deshabilitó el botón debido a un solapamiento real, respetamos tu aviso
-                if (btnSubmit.disabled && !alertaReserva.classList.contains('d-none')) {
-                    return; 
-                }
-
-                // Aplicamos la validación de duración máxima de 3 meses
-                if (fInicio.value && fFin.value) {
-                    const dateInicio = new Date(fInicio.value);
-                    const dateFin = new Date(fFin.value);
-
-                    const maxFinPermitido = new Date(dateInicio);
-                    maxFinPermitido.setMonth(maxFinPermitido.getMonth() + 3);
-
-                    if (dateFin > maxFinPermitido) {
-                        // Cambiamos el texto del banner y lo mostramos
-                        mensajeAlerta.innerText = "La duración máxima del alquiler no puede superar los 3 meses.";
-                        alertaReserva.classList.remove('d-none');
-                        
-                        // Activamos las clases visuales de Bootstrap is-invalid
-                        fInicio.classList.add('is-invalid');
-                        fFin.classList.add('is-invalid');
-                        fInicio.setCustomValidity('Duración máxima superada');
-                        fFin.setCustomValidity('Duración máxima superada');
-                        
-                        // Bloqueamos la acción de envío
-                        btnSubmit.disabled = true;
-                        document.getElementById('precio_total').innerText = "0€";
-                    }
-                }
-            };
-        });
     </script>
 </body>
 </html>
