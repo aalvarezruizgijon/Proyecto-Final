@@ -44,6 +44,10 @@ $mensaje_exito = isset($_GET['success']) ? "Reserva actualizada con éxito" : nu
                 </div>
             <?php endif; ?>
 
+            <div id="alerta_reserva_edicion" class="alert alert-warning d-none rounded-custom mb-4" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i> <span id="mensaje_alerta_edicion"></span>
+            </div>
+
             <div class="card card-detalle shadow-lg">
                 <div class="reserva-header d-flex justify-content-between align-items-center flex-wrap gap-3">
                     <div>
@@ -205,6 +209,58 @@ $mensaje_exito = isset($_GET['success']) ? "Reserva actualizada con éxito" : nu
         inputFin.addEventListener('change', actualizarCalculos);
         actualizarCalculos();
     });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const inputInicio = document.getElementById('edit_fecha_inicio');
+            const inputFin = document.getElementById('edit_fecha_fin');
+            const btnSubmit = document.querySelector('.btn-full');
+            const alertaReserva = document.getElementById('alerta_reserva_edicion');
+            const mensajeAlerta = document.getElementById('mensaje_alerta_edicion');
+
+            // 1. Limitar el calendario nativo de recogida hasta un máximo de 10 meses a partir de hoy
+            const hoyObj = new Date();
+            const maxInicioObj = new Date();
+            maxInicioObj.setMonth(hoyObj.getMonth() + 10);
+            inputInicio.max = maxInicioObj.toISOString().split('T')[0];
+
+            // 2. Interceptamos la lógica de actualización nativa mediante un Listener adicional
+            function validarLimitesNegocio() {
+                // Quitamos errores previos de límites
+                alertaReserva.classList.add('d-none');
+                btnSubmit.disabled = false;
+                inputInicio.classList.remove('is-invalid');
+                inputFin.classList.remove('is-invalid');
+
+                if (inputInicio.value && inputFin.value) {
+                    const dateInicio = new Date(inputInicio.value);
+                    const dateFin = new Date(inputFin.value);
+
+                    // Calculamos el tope permitido de duración (Fecha de inicio + 3 meses)
+                    const maxFinPermitido = new Date(dateInicio);
+                    maxFinPermitido.setMonth(maxFinPermitido.getMonth() + 3);
+
+                    if (dateFin > maxFinPermitido) {
+                        // Mostramos el banner de error estructurado
+                        mensajeAlerta.innerText = "La duración máxima de la reserva modificada no puede superar los 3 meses.";
+                        alertaReserva.classList.remove('d-none');
+                        
+                        // Marcamos los inputs con el estilo de error visual de Bootstrap
+                        inputInicio.classList.add('is-invalid');
+                        inputFin.classList.add('is-invalid');
+                        
+                        // Bloqueamos el botón y mandamos el display a 0€
+                        btnSubmit.disabled = true;
+                        document.getElementById('precio-total-display').innerText = "0.00€";
+                    }
+                }
+            }
+
+            // Escuchamos los cambios en ambos inputs para aplicar el filtro restrictivo de negocio
+            inputInicio.addEventListener('change', validarLimitesNegocio);
+            inputFin.addEventListener('change', validarLimitesNegocio);
+        });
     </script>
 </body>
 </html>

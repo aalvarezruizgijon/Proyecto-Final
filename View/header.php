@@ -17,6 +17,9 @@
                     <a class="nav-link fw-bold px-3 text-primary-drivo" href="./coches.php">Ver coches</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link fw-bold px-3 text-primary-drivo" href="./reservar.php">Reservar</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link fw-bold px-3 text-primary-drivo" href="./reservas.php">Mis reservas</a>
                 </li>
                 <li class="nav-item">

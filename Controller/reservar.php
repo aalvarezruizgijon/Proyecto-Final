@@ -1,26 +1,27 @@
 <?php
 require_once 'auth.php';
+require_once '../Model/Reserva.php';
 require_once '../Model/Vehiculo.php';
 
-// Capturamos el ID que viene por la URL
-$id_coche = $_GET['id'] ?? null;
+$busquedaRealizada = false;
+$vehiculosDisponibles = [];
+$fecha_inicio = '';
+$fecha_fin = '';
 
-if ($id_coche) {
-    // Obtenemos los datos de ese coche específico
-    $coche = Vehiculo::getById($id_coche);
+// Si el usuario rellena el formulario de la opción de menú "Reservar" y pulsa "Buscar"
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'buscar') {
+    $fecha_inicio = $_POST['fecha_inicio'];
+    $fecha_fin = $_POST['fecha_fin'];
 
-    if ($coche) {
-        // Obtener las reservas activas para este coche
-        require_once '../Model/Reserva.php';
-        $reservasActivas = Reserva::getReservasActivasByVehiculo($id_coche);
-        $reservasJson = json_encode($reservasActivas);
-
-        // Si el coche existe, cargamos la vista que acabamos de hacer
-        include '../View/reservar/reservar_view.php';
+    if (!empty($fecha_inicio) && !empty($fecha_fin) && $fecha_fin >= $fecha_inicio) {
+        // Llamamos al método inteligente que filtra en la base de datos
+        $vehiculosDisponibles = Reserva::getVehiculosDisponibles($fecha_inicio, $fecha_fin);
+        $busquedaRealizada = true;
     } else {
-        // Si no existe el coche, redirigimos al catálogo
-        header('Location: coches.php');
+        $error_fechas = "Las fechas seleccionadas no son válidas.";
     }
-} else {
-    header('Location: index.php');
 }
+
+// Cargamos la nueva vista unificada que muestra el formulario y los resultados abajo
+include '../View/reservar/reservar_view.php';
+?>

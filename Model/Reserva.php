@@ -190,5 +190,43 @@ public static function actualizarFechasYPrecio($id, $fecha_inicio, $fecha_fin, $
     return $stmt->execute();
 }
 
+// Busca en la BD y devuelve objetos de tipo Vehiculo libres en el rango dado
+    public static function getVehiculosDisponibles($fecha_inicio, $fecha_fin) {
+        $conexion = DrivoDB::connectDB();
+        
+        // El NOT IN descarta los coches que tengan reservas pisándose con las fechas deseadas.
+        // Se ignoran las reservas 'Canceladas' para que esos vehículos vuelvan a estar libres.
+        $consulta = "SELECT * FROM flota 
+                     WHERE id NOT IN (
+                        SELECT id_vehiculo 
+                        FROM reservas 
+                        WHERE estado != 'Cancelada' 
+                        AND :fecha_inicio <= fecha_fin 
+                        AND :fecha_fin >= fecha_inicio
+                     )";
+        
+        $stmt = $conexion->prepare($consulta);
+        $stmt->bindParam(':fecha_inicio', $fecha_inicio);
+        $stmt->bindParam(':fecha_fin', $fecha_fin);
+        $stmt->execute();
+        
+        $vehiculosLibres = [];
+        // Mapeamos los registros de la tabla 'flota' usando el método constructor estático de tu clase Vehiculo
+        while ($registro = $stmt->fetch(PDO::FETCH_OBJ)) {
+            // Nota: Asegúrate de que los atributos coincidan con las columnas de tu tabla 'flota'
+            $vehiculosLibres[] = new Vehiculo(
+                $registro->id, 
+                $registro->marca, 
+                $registro->modelo, 
+                $registro->precio_dia, 
+                $registro->imagen,
+                $registro->traccion ?? null,
+                $registro->motor ?? null,
+                $registro->cambios ?? null,
+                $registro->anio ?? null
+            );
+        }
+        return $vehiculosLibres;
+    }
 }
 ?>
