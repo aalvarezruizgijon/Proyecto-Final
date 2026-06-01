@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Drivo | Reservar Vehículo</title>
-    <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="../View/css/style.css">
@@ -25,7 +24,6 @@
         <?php endif; ?>
 
         <div class="row g-5">
-            <!-- Columna Izquierda: Imagen y Detalles -->
             <div class="col-lg-7">
                 <div class="oferta oferta-detalle p-0 w-100">
                     <img src="../View/img/coches/<?= pathinfo($coche->getImagen(), PATHINFO_FILENAME) ?>--sin_fondo.png" class="img-reserva" alt="<?= $coche->getNombreCompleto() ?>">
@@ -46,7 +44,6 @@
                 </div>
             </div>
 
-            <!-- Columna Derecha: Formulario de Reserva -->
             <div class="col-lg-5">
                 <div class="oferta p-4 w-100 position-relative">
                     <h2 class="modelo modelo-reserva">
@@ -55,7 +52,6 @@
 
                     <form action="../Controller/pago.php" method="POST" class="mt-4 needs-validation" novalidate>
                         
-                        <!-- Cuadrado de aviso (oculto por defecto) -->
                         <div id="alerta_reserva" class="alert alert-warning d-none rounded-custom mt-2" role="alert">
                             <i class="bi bi-exclamation-triangle-fill me-2"></i> <span id="mensaje_alerta"></span>
                         </div>
@@ -74,7 +70,6 @@
                                    required onchange="calcularTotal()">
                         </div>
 
-                        <!-- Sección de Precios Dinámica -->
                         <div class="price-summary mb-4 p-3">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <span class="fw-bold text-primary-drivo small">PRECIO POR DÍA</span>
@@ -235,6 +230,60 @@
             }, false)
           })
         })()
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const fInicio = document.getElementById('fecha_inicio');
+            const fFin = document.getElementById('fecha_fin');
+            const btnSubmit = document.querySelector('.btn-full');
+            const alertaReserva = document.getElementById('alerta_reserva');
+            const mensajeAlerta = document.getElementById('mensaje_alerta');
+
+            // 1. Limitar el selector de recogida nativo a un máximo de 10 meses a partir de hoy
+            const hoyObj = new Date();
+            const maxInicioObj = new Date();
+            maxInicioObj.setMonth(hoyObj.getMonth() + 10);
+            fInicio.max = maxInicioObj.toISOString().split('T')[0];
+
+            // 2. Extendemos tu función calcularTotal sin reescribir tu bloque de script original
+            const originalCalcularTotal = window.calcularTotal;
+            
+            window.calcularTotal = function() {
+                // Ejecuta primero tus validaciones por defecto (reseteos y solapamientos de fechas)
+                originalCalcularTotal();
+
+                // Si tu función ya deshabilitó el botón debido a un solapamiento real, respetamos tu aviso
+                if (btnSubmit.disabled && !alertaReserva.classList.contains('d-none')) {
+                    return; 
+                }
+
+                // Aplicamos la validación de duración máxima de 3 meses
+                if (fInicio.value && fFin.value) {
+                    const dateInicio = new Date(fInicio.value);
+                    const dateFin = new Date(fFin.value);
+
+                    const maxFinPermitido = new Date(dateInicio);
+                    maxFinPermitido.setMonth(maxFinPermitido.getMonth() + 3);
+
+                    if (dateFin > maxFinPermitido) {
+                        // Cambiamos el texto del banner y lo mostramos
+                        mensajeAlerta.innerText = "La duración máxima del alquiler no puede superar los 3 meses.";
+                        alertaReserva.classList.remove('d-none');
+                        
+                        // Activamos las clases visuales de Bootstrap is-invalid
+                        fInicio.classList.add('is-invalid');
+                        fFin.classList.add('is-invalid');
+                        fInicio.setCustomValidity('Duración máxima superada');
+                        fFin.setCustomValidity('Duración máxima superada');
+                        
+                        // Bloqueamos la acción de envío
+                        btnSubmit.disabled = true;
+                        document.getElementById('precio_total').innerText = "0€";
+                    }
+                }
+            };
+        });
     </script>
 </body>
 </html>
